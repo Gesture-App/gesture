@@ -3,6 +3,7 @@ package tui
 import (
 	"fmt"
 	"time"
+	"os"
 
 	"github.com/briandowns/spinner"
 	"github.com/ttacon/chalk"
@@ -17,6 +18,22 @@ func Header() {
 	s = spinner.New(spinner.CharSets[14], 100 * time.Millisecond)
 	s.Suffix = " Looking for nearby devices to pair with..."
 	s.Start()
+}
+
+func ConnectionChange(connected bool) {
+  if connected {
+    str := fmt.Sprintf("\nConnected!")
+    fmt.Println(chalk.Green.Color(str))
+    s.Stop()
+  } else {
+    str := fmt.Sprintf("\nDisconnected.")
+    fmt.Println(chalk.Red.Color(str))
+  }
+}
+
+func Error(str string) {
+    fmt.Println("\n" + chalk.Red.Color(str))
+		os.Exit(1)
 }
 
 func DeviceFound(localname string) {
