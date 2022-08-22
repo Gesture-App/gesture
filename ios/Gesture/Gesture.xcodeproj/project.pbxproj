@@ -12,6 +12,7 @@
 		0B2ED35E28B4042A0017439C /* Bones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2ED35D28B4042A0017439C /* Bones.swift */; };
 		0B2ED36028B404A10017439C /* SkeletonBone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2ED35F28B404A10017439C /* SkeletonBone.swift */; };
 		0B2ED36228B404BB0017439C /* SkeletonJoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2ED36128B404BB0017439C /* SkeletonJoint.swift */; };
+		0B2ED36428B405680017439C /* ARViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2ED36328B405680017439C /* ARViewContainer.swift */; };
 		D641C23B28B3D065008FDA34 /* GestureApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641C23A28B3D065008FDA34 /* GestureApp.swift */; };
 		D641C23D28B3D065008FDA34 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641C23C28B3D065008FDA34 /* ContentView.swift */; };
 		D641C23F28B3D069008FDA34 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D641C23E28B3D069008FDA34 /* Assets.xcassets */; };
@@ -26,6 +27,7 @@
 		0B2ED35D28B4042A0017439C /* Bones.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bones.swift; sourceTree = "<group>"; };
 		0B2ED35F28B404A10017439C /* SkeletonBone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonBone.swift; sourceTree = "<group>"; };
 		0B2ED36128B404BB0017439C /* SkeletonJoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonJoint.swift; sourceTree = "<group>"; };
+		0B2ED36328B405680017439C /* ARViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewContainer.swift; sourceTree = "<group>"; };
 		D641C23728B3D065008FDA34 /* Gesture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gesture.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D641C23A28B3D065008FDA34 /* GestureApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureApp.swift; sourceTree = "<group>"; };
 		D641C23C28B3D065008FDA34 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 				D641C23E28B3D069008FDA34 /* Assets.xcassets */,
 				D641C24028B3D069008FDA34 /* Preview Content */,
 				D641C24A28B3DA08008FDA34 /* Info.plist */,
+				0B2ED36328B405680017439C /* ARViewContainer.swift */,
 			);
 			path = Gesture;
 			sourceTree = "<group>";
@@ -164,6 +167,7 @@
 				0B2ED35A28B403B50017439C /* ARViewContainer.swift in Sources */,
 				0B2ED35C28B4040F0017439C /* BodySkeleton.swift in Sources */,
 				D641C24928B3D1DF008FDA34 /* BluetoothView.swift in Sources */,
+				0B2ED36428B405680017439C /* ARViewContainer.swift in Sources */,
 				D641C23B28B3D065008FDA34 /* GestureApp.swift in Sources */,
 				0B2ED36028B404A10017439C /* SkeletonBone.swift in Sources */,
 				0B2ED36228B404BB0017439C /* SkeletonJoint.swift in Sources */,
