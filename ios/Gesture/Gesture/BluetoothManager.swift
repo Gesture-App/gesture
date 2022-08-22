@@ -13,7 +13,7 @@ class BluetoothManager: NSObject, ObservableObject, CBPeripheralManagerDelegate 
     @Published var isBluetoothEnabled = false
     @Published var isAdvertising = false
     
-    let serviceUUID = "F4F8CC56-30E7-4A68-9D38-DA0B16A20E82"
+    let serviceUUID = "f4f8cc56-30e7-4a68-9d38-da0b16a20e82"
     var service: CBMutableService!
     var peripheralManager: CBPeripheralManager!
     var handsCharacteristic: CBMutableCharacteristic!
