@@ -11,8 +11,7 @@
 		D641C23D28B3D065008FDA34 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641C23C28B3D065008FDA34 /* ContentView.swift */; };
 		D641C23F28B3D069008FDA34 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D641C23E28B3D069008FDA34 /* Assets.xcassets */; };
 		D641C24228B3D069008FDA34 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D641C24128B3D069008FDA34 /* Preview Assets.xcassets */; };
-		D641C24928B3D1DF008FDA34 /* BluetoothView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641C24828B3D1DF008FDA34 /* BluetoothView.swift */; };
-		D641C24B28B3DA08008FDA34 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D641C24A28B3DA08008FDA34 /* Info.plist */; };
+		D641C24D28B3E4BC008FDA34 /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641C24C28B3E4BC008FDA34 /* BluetoothManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,8 +20,8 @@
 		D641C23C28B3D065008FDA34 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		D641C23E28B3D069008FDA34 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D641C24128B3D069008FDA34 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		D641C24828B3D1DF008FDA34 /* BluetoothView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothView.swift; sourceTree = "<group>"; };
-		D641C24A28B3DA08008FDA34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D641C24C28B3E4BC008FDA34 /* BluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
+		D641C24E28B3F20C008FDA34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,12 +54,12 @@
 		D641C23928B3D065008FDA34 /* Gesture */ = {
 			isa = PBXGroup;
 			children = (
-				D641C24828B3D1DF008FDA34 /* BluetoothView.swift */,
+				D641C24E28B3F20C008FDA34 /* Info.plist */,
 				D641C23A28B3D065008FDA34 /* GestureApp.swift */,
 				D641C23C28B3D065008FDA34 /* ContentView.swift */,
+				D641C24C28B3E4BC008FDA34 /* BluetoothManager.swift */,
 				D641C23E28B3D069008FDA34 /* Assets.xcassets */,
 				D641C24028B3D069008FDA34 /* Preview Content */,
-				D641C24A28B3DA08008FDA34 /* Info.plist */,
 			);
 			path = Gesture;
 			sourceTree = "<group>";
@@ -133,7 +132,6 @@
 			files = (
 				D641C24228B3D069008FDA34 /* Preview Assets.xcassets in Resources */,
 				D641C23F28B3D069008FDA34 /* Assets.xcassets in Resources */,
-				D641C24B28B3DA08008FDA34 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,7 +143,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D641C23D28B3D065008FDA34 /* ContentView.swift in Sources */,
-				D641C24928B3D1DF008FDA34 /* BluetoothView.swift in Sources */,
+				D641C24D28B3E4BC008FDA34 /* BluetoothManager.swift in Sources */,
 				D641C23B28B3D065008FDA34 /* GestureApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -275,8 +273,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Gesture/Preview Content\"";
+				DEVELOPMENT_TEAM = FWFX9YLS55;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Gesture/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Gesture;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This app uses Bluetooth to act as a peripheral device";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -287,11 +289,11 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = HackLodge.Gesture;
+				PRODUCT_BUNDLE_IDENTIFIER = hacklodge22.Gesture;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -303,8 +305,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Gesture/Preview Content\"";
+				DEVELOPMENT_TEAM = FWFX9YLS55;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Gesture/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Gesture;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This app uses Bluetooth to act as a peripheral device";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -315,11 +321,11 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = HackLodge.Gesture;
+				PRODUCT_BUNDLE_IDENTIFIER = hacklodge22.Gesture;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
