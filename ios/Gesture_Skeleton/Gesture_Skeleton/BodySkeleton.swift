@@ -1,6 +1,6 @@
 //
 //  BodySkeleton.swift
-//  Gesture
+//  Gesture_Skeleton
 //
 //  Created by Anson Yu on 8/22/22.
 //
@@ -10,9 +10,9 @@ import RealityKit
 import ARKit
 
 class BodySkeleton: Entity {
-    var joints: [String: Entity] = [:]
-    var bones: [String: Entity] = [:]
-    required init(for bodyAnchor: ARBodyAnchor){
+    var joints: [String: Entity] = [:] // maps jointNames to entities
+    var bones: [String: Entity] = [:] // maps boneNames to entities
+    required init(for bodyAnchor: ARBodyAnchor) {
         super.init()
         
         for jointName in ARSkeletonDefinition.defaultBody3D.jointNames {

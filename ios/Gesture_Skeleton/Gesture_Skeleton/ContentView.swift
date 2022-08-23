@@ -1,8 +1,8 @@
 //
 //  ContentView.swift
-//  Gesture
+//  Gesture_Skeleton
 //
-//  Created by Jacky Zhao on 2022-08-22.
+//  Created by Anson Yu on 8/22/22.
 //
 
 import SwiftUI

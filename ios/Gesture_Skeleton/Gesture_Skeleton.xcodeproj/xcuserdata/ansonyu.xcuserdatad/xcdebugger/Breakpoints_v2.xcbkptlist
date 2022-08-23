@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "6111EC05-0300-496D-A78C-ED6FBD37E3BE"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "118407F8-0AB0-4564-8F7D-2FAD2E4F37EA"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Gesture_Skeleton/BodySkeleton.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "11"
+            endingLineNumber = "11"
+            landmarkName = "unknown"
+            landmarkType = "0">
+            <Locations>
+               <Location
+                  uuid = "118407F8-0AB0-4564-8F7D-2FAD2E4F37EA - 849f0738b5db4d12"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Gesture_Skeleton.BodySkeleton.deinit"
+                  moduleName = "Gesture_Skeleton"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ansonyu/Projects/gesture/ios/Gesture_Skeleton/Gesture_Skeleton/BodySkeleton.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "12"
+                  endingLineNumber = "12"
+                  offsetFromSymbolStart = "0">
+               </Location>
+               <Location
+                  uuid = "118407F8-0AB0-4564-8F7D-2FAD2E4F37EA - c0d641f999e48f83"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Gesture_Skeleton.BodySkeleton.__deallocating_deinit"
+                  moduleName = "Gesture_Skeleton"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ansonyu/Projects/gesture/ios/Gesture_Skeleton/Gesture_Skeleton/BodySkeleton.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "16">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

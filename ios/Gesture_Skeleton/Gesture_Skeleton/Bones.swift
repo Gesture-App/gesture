@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Bones : CaseIterable {
+enum Bones: CaseIterable {
     case leftShoulderToLeftArm
     case leftArmToLeftForearm
     case leftForearmToLeftHand

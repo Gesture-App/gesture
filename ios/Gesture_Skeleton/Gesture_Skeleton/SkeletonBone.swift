@@ -1,6 +1,6 @@
 //
 //  SkeletonBone.swift
-//  Gesture
+//  Gesture_Skeleton
 //
 //  Created by Anson Yu on 8/22/22.
 //

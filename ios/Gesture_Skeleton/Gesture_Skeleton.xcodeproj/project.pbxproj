@@ -7,32 +7,32 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0B2ED35C28B4040F0017439C /* BodySkeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2ED35B28B4040F0017439C /* BodySkeleton.swift */; };
-		0B2ED35E28B4042A0017439C /* Bones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2ED35D28B4042A0017439C /* Bones.swift */; };
-		0B2ED36028B404A10017439C /* SkeletonBone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2ED35F28B404A10017439C /* SkeletonBone.swift */; };
-		0B2ED36228B404BB0017439C /* SkeletonJoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2ED36128B404BB0017439C /* SkeletonJoint.swift */; };
-		0B2ED36628B4196D0017439C /* ARViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2ED36528B4196D0017439C /* ARViewContainer.swift */; };
-		D641C23B28B3D065008FDA34 /* GestureApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641C23A28B3D065008FDA34 /* GestureApp.swift */; };
-		D641C23D28B3D065008FDA34 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641C23C28B3D065008FDA34 /* ContentView.swift */; };
-		D641C23F28B3D069008FDA34 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D641C23E28B3D069008FDA34 /* Assets.xcassets */; };
-		D641C24228B3D069008FDA34 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D641C24128B3D069008FDA34 /* Preview Assets.xcassets */; };
+		0BED5BF128B44F45007BD238 /* Gesture_SkeletonApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BED5BF028B44F45007BD238 /* Gesture_SkeletonApp.swift */; };
+		0BED5BF328B44F45007BD238 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BED5BF228B44F45007BD238 /* ContentView.swift */; };
+		0BED5BF528B44F47007BD238 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0BED5BF428B44F47007BD238 /* Assets.xcassets */; };
+		0BED5BF828B44F47007BD238 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0BED5BF728B44F47007BD238 /* Preview Assets.xcassets */; };
+		0BED5BFF28B44F63007BD238 /* ARViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BED5BFE28B44F62007BD238 /* ARViewContainer.swift */; };
+		0BED5C0128B44F7D007BD238 /* BodySkeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BED5C0028B44F7D007BD238 /* BodySkeleton.swift */; };
+		0BED5C0328B44FBE007BD238 /* Bones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BED5C0228B44FBE007BD238 /* Bones.swift */; };
+		0BED5C0728B44FEE007BD238 /* SkeletonBone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BED5C0628B44FEE007BD238 /* SkeletonBone.swift */; };
+		0BED5C0928B45004007BD238 /* SkeletonJoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BED5C0828B45004007BD238 /* SkeletonJoint.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0B2ED35B28B4040F0017439C /* BodySkeleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodySkeleton.swift; sourceTree = "<group>"; };
-		0B2ED35D28B4042A0017439C /* Bones.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bones.swift; sourceTree = "<group>"; };
-		0B2ED35F28B404A10017439C /* SkeletonBone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonBone.swift; sourceTree = "<group>"; };
-		0B2ED36128B404BB0017439C /* SkeletonJoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonJoint.swift; sourceTree = "<group>"; };
-		0B2ED36528B4196D0017439C /* ARViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewContainer.swift; sourceTree = "<group>"; };
-		D641C23728B3D065008FDA34 /* Gesture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gesture.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		D641C23A28B3D065008FDA34 /* GestureApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureApp.swift; sourceTree = "<group>"; };
-		D641C23C28B3D065008FDA34 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		D641C23E28B3D069008FDA34 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		D641C24128B3D069008FDA34 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		0BED5BED28B44F45007BD238 /* Gesture_Skeleton.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gesture_Skeleton.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0BED5BF028B44F45007BD238 /* Gesture_SkeletonApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gesture_SkeletonApp.swift; sourceTree = "<group>"; };
+		0BED5BF228B44F45007BD238 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		0BED5BF428B44F47007BD238 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0BED5BF728B44F47007BD238 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		0BED5BFE28B44F62007BD238 /* ARViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewContainer.swift; sourceTree = "<group>"; };
+		0BED5C0028B44F7D007BD238 /* BodySkeleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodySkeleton.swift; sourceTree = "<group>"; };
+		0BED5C0228B44FBE007BD238 /* Bones.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bones.swift; sourceTree = "<group>"; };
+		0BED5C0628B44FEE007BD238 /* SkeletonBone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonBone.swift; sourceTree = "<group>"; };
+		0BED5C0828B45004007BD238 /* SkeletonJoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonJoint.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		D641C23428B3D065008FDA34 /* Frameworks */ = {
+		0BED5BEA28B44F45007BD238 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -42,42 +42,42 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		D641C22E28B3D065008FDA34 = {
+		0BED5BE428B44F45007BD238 = {
 			isa = PBXGroup;
 			children = (
-				D641C23928B3D065008FDA34 /* Gesture */,
-				D641C23828B3D065008FDA34 /* Products */,
+				0BED5BEF28B44F45007BD238 /* Gesture_Skeleton */,
+				0BED5BEE28B44F45007BD238 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		D641C23828B3D065008FDA34 /* Products */ = {
+		0BED5BEE28B44F45007BD238 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D641C23728B3D065008FDA34 /* Gesture.app */,
+				0BED5BED28B44F45007BD238 /* Gesture_Skeleton.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		D641C23928B3D065008FDA34 /* Gesture */ = {
+		0BED5BEF28B44F45007BD238 /* Gesture_Skeleton */ = {
 			isa = PBXGroup;
 			children = (
-				0B2ED36528B4196D0017439C /* ARViewContainer.swift */,
-				0B2ED35F28B404A10017439C /* SkeletonBone.swift */,
-				D641C23A28B3D065008FDA34 /* GestureApp.swift */,
-				D641C23C28B3D065008FDA34 /* ContentView.swift */,
-				0B2ED36128B404BB0017439C /* SkeletonJoint.swift */,
-				0B2ED35B28B4040F0017439C /* BodySkeleton.swift */,
-				0B2ED35D28B4042A0017439C /* Bones.swift */,
-				D641C23E28B3D069008FDA34 /* Assets.xcassets */,
-				D641C24028B3D069008FDA34 /* Preview Content */,
+				0BED5BF028B44F45007BD238 /* Gesture_SkeletonApp.swift */,
+				0BED5BFE28B44F62007BD238 /* ARViewContainer.swift */,
+				0BED5BF228B44F45007BD238 /* ContentView.swift */,
+				0BED5C0028B44F7D007BD238 /* BodySkeleton.swift */,
+				0BED5C0228B44FBE007BD238 /* Bones.swift */,
+				0BED5C0628B44FEE007BD238 /* SkeletonBone.swift */,
+				0BED5C0828B45004007BD238 /* SkeletonJoint.swift */,
+				0BED5BF428B44F47007BD238 /* Assets.xcassets */,
+				0BED5BF628B44F47007BD238 /* Preview Content */,
 			);
-			path = Gesture;
+			path = Gesture_Skeleton;
 			sourceTree = "<group>";
 		};
-		D641C24028B3D069008FDA34 /* Preview Content */ = {
+		0BED5BF628B44F47007BD238 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				D641C24128B3D069008FDA34 /* Preview Assets.xcassets */,
+				0BED5BF728B44F47007BD238 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
@@ -85,39 +85,39 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D641C23628B3D065008FDA34 /* Gesture */ = {
+		0BED5BEC28B44F45007BD238 /* Gesture_Skeleton */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D641C24528B3D069008FDA34 /* Build configuration list for PBXNativeTarget "Gesture" */;
+			buildConfigurationList = 0BED5BFB28B44F47007BD238 /* Build configuration list for PBXNativeTarget "Gesture_Skeleton" */;
 			buildPhases = (
-				D641C23328B3D065008FDA34 /* Sources */,
-				D641C23428B3D065008FDA34 /* Frameworks */,
-				D641C23528B3D065008FDA34 /* Resources */,
+				0BED5BE928B44F45007BD238 /* Sources */,
+				0BED5BEA28B44F45007BD238 /* Frameworks */,
+				0BED5BEB28B44F45007BD238 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = Gesture;
-			productName = Gesture;
-			productReference = D641C23728B3D065008FDA34 /* Gesture.app */;
+			name = Gesture_Skeleton;
+			productName = Gesture_Skeleton;
+			productReference = 0BED5BED28B44F45007BD238 /* Gesture_Skeleton.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		D641C22F28B3D065008FDA34 /* Project object */ = {
+		0BED5BE528B44F45007BD238 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1340;
 				LastUpgradeCheck = 1340;
 				TargetAttributes = {
-					D641C23628B3D065008FDA34 = {
+					0BED5BEC28B44F45007BD238 = {
 						CreatedOnToolsVersion = 13.4.1;
 					};
 				};
 			};
-			buildConfigurationList = D641C23228B3D065008FDA34 /* Build configuration list for PBXProject "Gesture" */;
+			buildConfigurationList = 0BED5BE828B44F45007BD238 /* Build configuration list for PBXProject "Gesture_Skeleton" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -125,47 +125,47 @@
 				en,
 				Base,
 			);
-			mainGroup = D641C22E28B3D065008FDA34;
-			productRefGroup = D641C23828B3D065008FDA34 /* Products */;
+			mainGroup = 0BED5BE428B44F45007BD238;
+			productRefGroup = 0BED5BEE28B44F45007BD238 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D641C23628B3D065008FDA34 /* Gesture */,
+				0BED5BEC28B44F45007BD238 /* Gesture_Skeleton */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		D641C23528B3D065008FDA34 /* Resources */ = {
+		0BED5BEB28B44F45007BD238 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D641C24228B3D069008FDA34 /* Preview Assets.xcassets in Resources */,
-				D641C23F28B3D069008FDA34 /* Assets.xcassets in Resources */,
+				0BED5BF828B44F47007BD238 /* Preview Assets.xcassets in Resources */,
+				0BED5BF528B44F47007BD238 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		D641C23328B3D065008FDA34 /* Sources */ = {
+		0BED5BE928B44F45007BD238 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D641C23D28B3D065008FDA34 /* ContentView.swift in Sources */,
-				0B2ED35E28B4042A0017439C /* Bones.swift in Sources */,
-				0B2ED35C28B4040F0017439C /* BodySkeleton.swift in Sources */,
-				0B2ED36628B4196D0017439C /* ARViewContainer.swift in Sources */,
-				D641C23B28B3D065008FDA34 /* GestureApp.swift in Sources */,
-				0B2ED36028B404A10017439C /* SkeletonBone.swift in Sources */,
-				0B2ED36228B404BB0017439C /* SkeletonJoint.swift in Sources */,
+				0BED5C0128B44F7D007BD238 /* BodySkeleton.swift in Sources */,
+				0BED5BF328B44F45007BD238 /* ContentView.swift in Sources */,
+				0BED5BF128B44F45007BD238 /* Gesture_SkeletonApp.swift in Sources */,
+				0BED5C0328B44FBE007BD238 /* Bones.swift in Sources */,
+				0BED5BFF28B44F63007BD238 /* ARViewContainer.swift in Sources */,
+				0BED5C0728B44FEE007BD238 /* SkeletonBone.swift in Sources */,
+				0BED5C0928B45004007BD238 /* SkeletonJoint.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		D641C24328B3D069008FDA34 /* Debug */ = {
+		0BED5BF928B44F47007BD238 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -225,7 +225,7 @@
 			};
 			name = Debug;
 		};
-		D641C24428B3D069008FDA34 /* Release */ = {
+		0BED5BFA28B44F47007BD238 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -279,18 +279,18 @@
 			};
 			name = Release;
 		};
-		D641C24628B3D069008FDA34 /* Debug */ = {
+		0BED5BFC28B44F47007BD238 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Gesture/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Gesture_Skeleton/Preview Content\"";
 				DEVELOPMENT_TEAM = FWFX9YLS55;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses Camera for AR Functionality";
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses Camera for AR effects.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -301,7 +301,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = hacklodge22.Gesture;
+				PRODUCT_BUNDLE_IDENTIFIER = "HackLodge.Gesture-Skeleton";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -309,18 +309,18 @@
 			};
 			name = Debug;
 		};
-		D641C24728B3D069008FDA34 /* Release */ = {
+		0BED5BFD28B44F47007BD238 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Gesture/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Gesture_Skeleton/Preview Content\"";
 				DEVELOPMENT_TEAM = FWFX9YLS55;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses Camera for AR Functionality";
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses Camera for AR effects.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -331,7 +331,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = hacklodge22.Gesture;
+				PRODUCT_BUNDLE_IDENTIFIER = "HackLodge.Gesture-Skeleton";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -342,25 +342,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D641C23228B3D065008FDA34 /* Build configuration list for PBXProject "Gesture" */ = {
+		0BED5BE828B44F45007BD238 /* Build configuration list for PBXProject "Gesture_Skeleton" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D641C24328B3D069008FDA34 /* Debug */,
-				D641C24428B3D069008FDA34 /* Release */,
+				0BED5BF928B44F47007BD238 /* Debug */,
+				0BED5BFA28B44F47007BD238 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D641C24528B3D069008FDA34 /* Build configuration list for PBXNativeTarget "Gesture" */ = {
+		0BED5BFB28B44F47007BD238 /* Build configuration list for PBXNativeTarget "Gesture_Skeleton" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D641C24628B3D069008FDA34 /* Debug */,
-				D641C24728B3D069008FDA34 /* Release */,
+				0BED5BFC28B44F47007BD238 /* Debug */,
+				0BED5BFD28B44F47007BD238 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = D641C22F28B3D065008FDA34 /* Project object */;
+	rootObject = 0BED5BE528B44F45007BD238 /* Project object */;
 }
