@@ -107,7 +107,6 @@ class BodySkeleton: Entity {
         
         let rootPosition = simd_make_float3(bodyAnchor.transform.columns.3)
         
-<<<<<<< HEAD
         // Relative to hip joint for FROM
         let jointFromEntityOffsetFromRoot = simd_make_float3(fromJointEntityTransform.columns.3)
         
@@ -115,12 +114,6 @@ class BodySkeleton: Entity {
         let jointFromEntityPosition = jointFromEntityOffsetFromRoot + rootPosition
         
         // Relative to hip joint for TO
-        let jointToEntityOffsetFromRoot = simd_make_float3(toJointEntityTransform.columns.3)
-=======
-        let jointFromEntityOffsetFromRoot = simd_make_float3(fromJointEntityTransform.columns.3) // relative to root (i.e. hipJoint)
-        let jointFromEntityPosition = jointFromEntityOffsetFromRoot + rootPosition // relative to world reference frame
->>>>>>> skeleton-frame
-        
         let jointToEntityOffsetFromRoot = simd_make_float3(toJointEntityTransform.columns.3) // relative to root (i.e. hipJoint)
         let jointToEntityPosition = jointToEntityOffsetFromRoot + rootPosition // relative to world reference frame
         

@@ -4,11 +4,7 @@
 //
 //  Created by Anson Yu on 8/22/22.
 //
-<<<<<<< HEAD
-=======
 
-import Foundation
->>>>>>> skeleton-frame
 import SwiftUI
 import RealityKit
 import ARKit

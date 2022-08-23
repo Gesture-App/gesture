@@ -11,42 +11,26 @@
 		0B2ED35E28B4042A0017439C /* Bones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2ED35D28B4042A0017439C /* Bones.swift */; };
 		0B2ED36028B404A10017439C /* SkeletonBone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2ED35F28B404A10017439C /* SkeletonBone.swift */; };
 		0B2ED36228B404BB0017439C /* SkeletonJoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2ED36128B404BB0017439C /* SkeletonJoint.swift */; };
-<<<<<<< HEAD
-=======
-		0B2ED36628B4196D0017439C /* ARViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2ED36528B4196D0017439C /* ARViewContainer.swift */; };
->>>>>>> skeleton-frame
 		D641C23B28B3D065008FDA34 /* GestureApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641C23A28B3D065008FDA34 /* GestureApp.swift */; };
 		D641C23D28B3D065008FDA34 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641C23C28B3D065008FDA34 /* ContentView.swift */; };
 		D641C23F28B3D069008FDA34 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D641C23E28B3D069008FDA34 /* Assets.xcassets */; };
 		D641C24228B3D069008FDA34 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D641C24128B3D069008FDA34 /* Preview Assets.xcassets */; };
-<<<<<<< HEAD
 		D65B864028B41A7200E7A23D /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65B863F28B41A7100E7A23D /* BluetoothManager.swift */; };
+		D65B864428B46B6E00E7A23D /* ARViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65B864328B46B6E00E7A23D /* ARViewContainer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0B2ED35928B403B50017439C /* ARViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewContainer.swift; sourceTree = "<group>"; };
-=======
-/* End PBXBuildFile section */
-
-/* Begin PBXFileReference section */
->>>>>>> skeleton-frame
 		0B2ED35B28B4040F0017439C /* BodySkeleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodySkeleton.swift; sourceTree = "<group>"; };
 		0B2ED35D28B4042A0017439C /* Bones.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bones.swift; sourceTree = "<group>"; };
 		0B2ED35F28B404A10017439C /* SkeletonBone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonBone.swift; sourceTree = "<group>"; };
 		0B2ED36128B404BB0017439C /* SkeletonJoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonJoint.swift; sourceTree = "<group>"; };
-<<<<<<< HEAD
-=======
-		0B2ED36528B4196D0017439C /* ARViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewContainer.swift; sourceTree = "<group>"; };
->>>>>>> skeleton-frame
 		D641C23728B3D065008FDA34 /* Gesture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gesture.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D641C23A28B3D065008FDA34 /* GestureApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureApp.swift; sourceTree = "<group>"; };
 		D641C23C28B3D065008FDA34 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		D641C23E28B3D069008FDA34 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D641C24128B3D069008FDA34 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-<<<<<<< HEAD
 		D65B863F28B41A7100E7A23D /* BluetoothManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
-=======
->>>>>>> skeleton-frame
+		D65B864328B46B6E00E7A23D /* ARViewContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARViewContainer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,12 +63,8 @@
 		D641C23928B3D065008FDA34 /* Gesture */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
+				D65B864328B46B6E00E7A23D /* ARViewContainer.swift */,
 				D65B863F28B41A7100E7A23D /* BluetoothManager.swift */,
-				0B2ED35928B403B50017439C /* ARViewContainer.swift */,
-=======
-				0B2ED36528B4196D0017439C /* ARViewContainer.swift */,
->>>>>>> skeleton-frame
 				0B2ED35F28B404A10017439C /* SkeletonBone.swift */,
 				D641C23A28B3D065008FDA34 /* GestureApp.swift */,
 				D641C23C28B3D065008FDA34 /* ContentView.swift */,
@@ -176,15 +156,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				D641C23D28B3D065008FDA34 /* ContentView.swift in Sources */,
+				D65B864428B46B6E00E7A23D /* ARViewContainer.swift in Sources */,
 				0B2ED35E28B4042A0017439C /* Bones.swift in Sources */,
-<<<<<<< HEAD
 				D65B864028B41A7200E7A23D /* BluetoothManager.swift in Sources */,
-				0B2ED35A28B403B50017439C /* ARViewContainer.swift in Sources */,
 				0B2ED35C28B4040F0017439C /* BodySkeleton.swift in Sources */,
-=======
-				0B2ED35C28B4040F0017439C /* BodySkeleton.swift in Sources */,
-				0B2ED36628B4196D0017439C /* ARViewContainer.swift in Sources */,
->>>>>>> skeleton-frame
 				D641C23B28B3D065008FDA34 /* GestureApp.swift in Sources */,
 				0B2ED36028B404A10017439C /* SkeletonBone.swift in Sources */,
 				0B2ED36228B404BB0017439C /* SkeletonJoint.swift in Sources */,
@@ -319,12 +294,8 @@
 				DEVELOPMENT_TEAM = FWFX9YLS55;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-<<<<<<< HEAD
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This app uses Bluetooth to transit hand position information to your device";
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses the camera for AR tracking";
-=======
-				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses Camera for AR Functionality";
->>>>>>> skeleton-frame
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -354,12 +325,8 @@
 				DEVELOPMENT_TEAM = FWFX9YLS55;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-<<<<<<< HEAD
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This app uses Bluetooth to transit hand position information to your device";
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses the camera for AR tracking";
-=======
-				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses Camera for AR Functionality";
->>>>>>> skeleton-frame
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
