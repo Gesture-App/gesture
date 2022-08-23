@@ -74,13 +74,15 @@ func connect(ctx *ReceiverCtx, res bluetooth.ScanResult) {
   services, discoveryErr := device.DiscoverServices(uuid_arr)
   must("discover list of services", discoveryErr)
 
-  for _, srvc := range services {
-		chars, err := srvc.DiscoverCharacteristics(uuid_arr)
-    must("discover characteristics for service", err)
-		for _, char := range chars {
-			ctx.datastream = &char
-		}
-	}
+  svc := services[0]
+  chars, err := svc.DiscoverCharacteristics(uuid_arr)
+  must("discover characteristics for service", err)
+  ctx.datastream = &(chars[0])
+  ctx.datastream.EnableNotifications(func(buf []byte) {
+    println("%+v\n", buf)
+  })
+
+  select {}
 }
 
 func must(action string, err error) {
