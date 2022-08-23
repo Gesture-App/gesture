@@ -1,17 +1,18 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"os/signal"
 
 	"time"
 
 	"github.com/ansonyuu/gesture/tui"
+	"github.com/gosuri/uilive"
 	"tinygo.org/x/bluetooth"
 )
 
 var adapter = bluetooth.DefaultAdapter
+var Writer = uilive.New() 
 
 type ReceiverCtx struct {
 	isScanning bool
@@ -79,10 +80,11 @@ func connect(ctx *ReceiverCtx, res bluetooth.ScanResult) {
   svc := services[0]
   chars, err := svc.DiscoverCharacteristics(uuid_arr)
   must("discover characteristics for service", err)
+
+  Writer.Start()
+
   ctx.datastream = &(chars[0])
-  err = ctx.datastream.EnableNotifications(func(buf []byte) {
-    fmt.Printf("%s\n", string(buf))
-  })
+  err = ctx.datastream.EnableNotifications(HandleInput)
   must("enable notifications on characteristic stream", err)
   select {}
 }

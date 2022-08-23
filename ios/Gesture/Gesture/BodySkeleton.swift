@@ -103,6 +103,7 @@ class BodySkeleton: Entity {
                 }
             }
         }
+        
         sendHandData(l: l!, r: r!)
         
         for bone in Bones.allCases {
