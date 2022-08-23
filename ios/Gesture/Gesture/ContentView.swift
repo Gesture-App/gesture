@@ -11,6 +11,7 @@ struct ContentView: View {
     @ObservedObject var bluetoothManager = BluetoothManager()
     
     var body: some View {
+<<<<<<< HEAD
         NavigationView {
             VStack (spacing: 20) {
                 Text("👋 Gesture")
@@ -52,6 +53,10 @@ struct ContentView: View {
             }
         }
         .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+=======
+        ARViewContainer()
+            .edgesIgnoringSafeArea(.all)
+>>>>>>> skeleton-frame
     }
 }
 

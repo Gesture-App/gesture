@@ -1,9 +1,9 @@
-//
-//  BluetoothManager.swift
-//  Gesture
-//
-//  Created by Jacky Zhao on 2022-08-22.
-//
+////
+////  BluetoothView.swift
+////  Gesture
+////
+////  Created by Jacky Zhao on 2022-08-22.
+////
 
 import Foundation
 import CoreBluetooth
