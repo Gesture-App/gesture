@@ -16,7 +16,7 @@ class BluetoothManager: NSObject, ObservableObject, CBPeripheralManagerDelegate 
     
     let serviceUUID = "f4f8cc56-30e7-4a68-9d38-da0b16a20e82"
     var service: CBMutableService!
-    var peripheralManager: CBPeripheralManager!
+    public var peripheralManager: CBPeripheralManager!
     var handsCharacteristic: CBMutableCharacteristic!
     
     override init() {
@@ -26,13 +26,12 @@ class BluetoothManager: NSObject, ObservableObject, CBPeripheralManagerDelegate 
     
     public func toggleAdvertisement() {
         if isBluetoothEnabled {
+            peripheralManager.stopAdvertising()
             if !isAdvertising {
                 peripheralManager.startAdvertising([
                     CBAdvertisementDataLocalNameKey: "Gesture: Controller",
                     CBAdvertisementDataServiceUUIDsKey : [service.uuid]
                 ])
-            } else {
-                peripheralManager.stopAdvertising()
             }
             isAdvertising = !isAdvertising
         }

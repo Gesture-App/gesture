@@ -8,12 +8,24 @@
 import Foundation
 import RealityKit
 import ARKit
+import CoreBluetooth
+
+struct HandJSON: Codable {
+    let x: Float
+    let y: Float
+    let z: Float
+    let label: String
+}
 
 class BodySkeleton: Entity {
     var joints: [String: Entity] = [:]
     var bones: [String: Entity] = [:]
-    required init(for bodyAnchor: ARBodyAnchor){
+    
+    private var bl: BluetoothManager?
+    
+    required init(for bodyAnchor: ARBodyAnchor, bluetooth bl: BluetoothManager){
         super.init()
+        self.bl = bl
         
         for jointName in ARSkeletonDefinition.defaultBody3D.jointNames {
             // Default values for joint appearance
@@ -24,20 +36,23 @@ class BodySkeleton: Entity {
             // NOTE: Green joints are actively tracked by ARKit. Yellow joints are not tracked. They just follow the motion of the closest green parent.
             switch jointName {
             case "neck_1_joint", "neck_2_joint", "neck_3_joint", "neck_4_joint", "head_joint", "left_shoulder_1_joint", "right_shoulder_1_joint":
-                jointRadius *= 0.05
+                jointRadius *= 0.5
             case "jaw_joint", "chin_joint", "left_eye_joint", "left_eyeLowerLid_joint", "left_eyeUpperLid_joint", "left_eyeball_joint", "nose_joint", "right_eye_joint", "right_eyeLowerLid_joint", "right_eyeUpperLid_joint", "right_eyeball_joint":
                 jointRadius *= 0.2
                 jointColor = .black
             case _ where jointName.hasPrefix("spine_"):
-                jointRadius *= 0.075
+                jointRadius *= 0.75
             case "left_hand_joint", "right_hand_joint":
-                jointRadius *= 0.1
+                jointRadius *= 1
                 jointColor = .white
-            case _ where jointName.hasPrefix("left_hand") || jointName.hasPrefix("right_hand"):
+            case _ where jointName.hasPrefix("left_hand"):
                 jointRadius *= 0.25
-                jointColor = .black
+                jointColor = .red
+            case _ where jointName.hasPrefix("right_hand"):
+                jointRadius *= 0.25
+                jointColor = .blue
             case _ where jointName.hasPrefix("left_toes") || jointName.hasPrefix("right_toes"):
-                jointRadius *= 0.05
+                jointRadius *= 0.5
                 jointColor = .black
             default:
                 jointRadius = 0.05
@@ -85,7 +100,18 @@ class BodySkeleton: Entity {
             else { continue }
             
             entity.position = skeletonBone.centerPosition
-            let _ = print(entity.position)
+            
+            if bone.jointToName.hasSuffix("hand_joint") {
+                do {
+                    let pos = entity.position
+                    let json = HandJSON(x: pos.x, y: pos.y, z: pos.z, label: bone.jointToName)
+                    let jsonData = try JSONEncoder().encode(json)
+                    let data = Data.init(jsonData)
+                    bl?.peripheralManager.updateValue(data, for: bl!.handsCharacteristic, onSubscribedCentrals: nil)
+                    let _ = print(json.x, json.y, json.z)
+                } catch { print(error) }
+            }
+            
             entity.look(at: skeletonBone.toJoint.position, from: skeletonBone.centerPosition, relativeTo: nil) // Sets orientation for bone
         }
         
