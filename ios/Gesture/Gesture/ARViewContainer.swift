@@ -50,6 +50,7 @@ struct ARViewContainer: UIViewRepresentable  {
         public func session(_ session: ARSession, didUpdate anchors: [ARAnchor]) {
             for anchor in anchors {
                 if let bodyAnchor = anchor as? ARBodyAnchor {
+                    
                     // Create or update bodySkeleton
                     if let skeleton = bodySkeleton {
                         // BodySkeleton already exists, update pose of all joints
