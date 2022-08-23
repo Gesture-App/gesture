@@ -18,7 +18,7 @@ struct ContentView: View {
                 
                 VStack {
                     if let _ = bluetoothManager.pairedTo {
-                        NavigationLink(destination: ARViewContainer().edgesIgnoringSafeArea(.all)) {
+                        NavigationLink(destination: ARViewContainer(bluetooth: bluetoothManager).edgesIgnoringSafeArea(.all)) {
                             Text("Start gesture recognition")
                         }.buttonStyle(.borderedProminent)
                     } else {

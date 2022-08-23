@@ -14,7 +14,11 @@ struct HandJSON: Codable {
     let x: Float
     let y: Float
     let z: Float
-    let label: String
+}
+
+struct Payload: Codable {
+    let left: HandJSON
+    let right: HandJSON
 }
 
 class BodySkeleton: Entity {
@@ -83,14 +87,23 @@ class BodySkeleton: Entity {
     func update(with bodyAnchor: ARBodyAnchor) {
         let rootPosition = simd_make_float3(bodyAnchor.transform.columns.3)
         
+        var l: Entity?
+        var r: Entity?
         for jointName in ARSkeletonDefinition.defaultBody3D.jointNames {
             if let jointEntity = joints[jointName], let jointEntityTransform = bodyAnchor.skeleton.modelTransform(for: ARSkeleton.JointName(rawValue: jointName)) {
                 
                 let jointEntityOffsetFromRoot = simd_make_float3(jointEntityTransform.columns.3) // relative to root (i.e. hipJoint)
                 jointEntity.position = jointEntityOffsetFromRoot + rootPosition // relative to world reference frame
+                
                 jointEntity.orientation = Transform(matrix: jointEntityTransform).rotation
+                if jointName == "left_hand_joint" {
+                    l = jointEntity
+                } else if jointName == "right_hand_joint" {
+                    r = jointEntity
+                }
             }
         }
+        sendHandData(l: l!, r: r!)
         
         for bone in Bones.allCases {
             let boneName = bone.name
@@ -100,21 +113,22 @@ class BodySkeleton: Entity {
             else { continue }
             
             entity.position = skeletonBone.centerPosition
-            
-            if bone.jointToName.hasSuffix("hand_joint") {
-                do {
-                    let pos = entity.position
-                    let json = HandJSON(x: pos.x, y: pos.y, z: pos.z, label: bone.jointToName)
-                    let jsonData = try JSONEncoder().encode(json)
-                    let data = Data.init(jsonData)
-                    bl?.peripheralManager.updateValue(data, for: bl!.handsCharacteristic, onSubscribedCentrals: nil)
-                    let _ = print(json.x, json.y, json.z)
-                } catch { print(error) }
-            }
-            
             entity.look(at: skeletonBone.toJoint.position, from: skeletonBone.centerPosition, relativeTo: nil) // Sets orientation for bone
         }
+    }
+    
+    private func sendHandData(l: Entity, r: Entity) {
+        let encode = {(entity: Entity) -> HandJSON in
+            let pos = entity.position
+            return HandJSON(x: pos.x, y: pos.y, z: pos.z)
+        }
         
+        do {
+            let payload: Payload = Payload(left: encode(l), right: encode(r))
+            let jsonData = try JSONEncoder().encode(payload)
+            let data = Data.init(jsonData)
+            bl!.peripheralManager.updateValue(data, for: bl!.handsCharacteristic, onSubscribedCentrals: [bl!.pairedTo!])
+        } catch { print(error) }
     }
     
     private func createJoint(radius: Float, color: UIColor = .white) -> Entity {

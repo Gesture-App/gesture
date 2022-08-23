@@ -6,13 +6,14 @@
 ////
 
 import Foundation
+import SwiftUI
 import CoreBluetooth
 
 class BluetoothManager: NSObject, ObservableObject, CBPeripheralManagerDelegate {
     
     @Published var isBluetoothEnabled = false
     @Published var isAdvertising = false
-    @Published var pairedTo: Optional<CBCentral> = nil
+    public var pairedTo: Optional<CBCentral> = nil
     
     let serviceUUID = "f4f8cc56-30e7-4a68-9d38-da0b16a20e82"
     var service: CBMutableService!
@@ -48,7 +49,7 @@ class BluetoothManager: NSObject, ObservableObject, CBPeripheralManagerDelegate 
             service = CBMutableService(type: serviceCBUUID, primary: true)
             handsCharacteristic = CBMutableCharacteristic.init(
                 type: serviceCBUUID,
-                properties: [.read, .write, .notify],
+                properties: [.writeWithoutResponse, .notify, .read],
                 value: nil,
                 permissions: [.readable, .writeable]
             )
@@ -66,6 +67,7 @@ class BluetoothManager: NSObject, ObservableObject, CBPeripheralManagerDelegate 
         didSubscribeTo characteristic: CBCharacteristic
     ) {
         pairedTo = central
+        peripheralManager.setDesiredConnectionLatency(.low, for: central)
         peripheralManager.stopAdvertising()
         isAdvertising = false
     }

@@ -16,7 +16,7 @@ private let bodySkeletonAnchor = AnchorEntity()
 
 // Wraps UIKit-based ARView to be used in SwiftUI View
 struct ARViewContainer: UIViewRepresentable  {
-    @ObservedObject public var bluetoothManager = BluetoothManager()
+    var bluetooth = BluetoothManager()
     
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
@@ -55,7 +55,7 @@ struct ARViewContainer: UIViewRepresentable  {
                         // BodySkeleton already exists, update pose of all joints
                         skeleton.update(with: bodyAnchor)
                     } else {
-                        bodySkeleton = BodySkeleton(for: bodyAnchor, bluetooth: parent.bluetoothManager)
+                        bodySkeleton = BodySkeleton(for: bodyAnchor, bluetooth: parent.bluetooth)
                         bodySkeletonAnchor.addChild(bodySkeleton!)
                     }
                 }
