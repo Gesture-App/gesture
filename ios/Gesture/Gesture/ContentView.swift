@@ -11,28 +11,47 @@ struct ContentView: View {
     @ObservedObject var bluetoothManager = BluetoothManager()
     
     var body: some View {
-        VStack (spacing: 10) {
-            Text("👋 Gesture")
-                .font(.largeTitle)
-                .padding()
-            Button(action: bluetoothManager.toggleAdvertisement) {
-                if bluetoothManager.isAdvertising {
-                    Text("Stop advertising").foregroundColor(.red)
-                } else {
-                    Text("Start pairing to device")
+        NavigationView {
+            VStack (spacing: 20) {
+                Text("👋 Gesture")
+                    .font(.largeTitle)
+                
+                VStack {
+                    if let receiver = bluetoothManager.pairedTo {
+                        NavigationLink(destination: ARViewContainer().edgesIgnoringSafeArea(.all)) {
+                            Text("Start gesture recognition")
+                        }.buttonStyle(.borderedProminent)
+                    } else {
+                        Button(action: bluetoothManager.toggleAdvertisement) {
+                            if bluetoothManager.isAdvertising {
+                                Text("Stop advertising").foregroundColor(.red)
+                            } else {
+                                Text("Start pairing to device").disabled(!bluetoothManager.isBluetoothEnabled)
+                            }
+                        }.buttonStyle(.bordered).font(.headline)
+                    }
+                }.padding()
+
+                
+                VStack {
+                    if bluetoothManager.isBluetoothEnabled {
+                        Text("Bluetooth: On")
+                            .foregroundColor(.green)
+                    }
+                    else {
+                        Text("Bluetooth: Off")
+                            .foregroundColor(.red)
+                    }
+                    if bluetoothManager.pairedTo != nil {
+                        Text("Paired Successfully")
+                            .foregroundColor(.green)
+                    } else {
+                        Text("Not paired yet")
+                    }
                 }
             }
-        }.padding()
-        VStack {
-            if bluetoothManager.isBluetoothEnabled {
-                Text("Bluetooth: On")
-                    .foregroundColor(.green)
-            }
-            else {
-                Text("Bluetooth: Off")
-                    .foregroundColor(.red)
-            }
         }
+        .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
     }
 }
 

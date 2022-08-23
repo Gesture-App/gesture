@@ -12,6 +12,7 @@ class BluetoothManager: NSObject, ObservableObject, CBPeripheralManagerDelegate 
     
     @Published var isBluetoothEnabled = false
     @Published var isAdvertising = false
+    @Published var pairedTo: Optional<CBCentral> = nil
     
     let serviceUUID = "f4f8cc56-30e7-4a68-9d38-da0b16a20e82"
     var service: CBMutableService!
@@ -24,32 +25,49 @@ class BluetoothManager: NSObject, ObservableObject, CBPeripheralManagerDelegate 
     }
     
     public func toggleAdvertisement() {
-        if !isAdvertising {
-            peripheralManager.startAdvertising([
-                CBAdvertisementDataLocalNameKey: "Gesture: Controller",
-                CBAdvertisementDataServiceUUIDsKey : [service.uuid]
-            ])
-        } else {
-            peripheralManager.stopAdvertising()
+        if isBluetoothEnabled {
+            if !isAdvertising {
+                peripheralManager.startAdvertising([
+                    CBAdvertisementDataLocalNameKey: "Gesture: Controller",
+                    CBAdvertisementDataServiceUUIDsKey : [service.uuid]
+                ])
+            } else {
+                peripheralManager.stopAdvertising()
+            }
+            isAdvertising = !isAdvertising
         }
-        isAdvertising = !isAdvertising
     }
     
     func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {
         // ensure bluetooth is on
         if peripheral.state == .poweredOn {
-            isBluetoothEnabled = true
+            if peripheralManager.isAdvertising {
+                peripheralManager.stopAdvertising()
+            }
+            
             let serviceCBUUID = CBUUID(string: serviceUUID)
             service = CBMutableService(type: serviceCBUUID, primary: true)
             handsCharacteristic = CBMutableCharacteristic.init(
                 type: serviceCBUUID,
                 properties: [.read, .write, .notify],
                 value: nil,
-                permissions: [CBAttributePermissions.readable, CBAttributePermissions.writeable])
+                permissions: [.readable, .writeable]
+            )
             service.characteristics = [handsCharacteristic]
-            peripheralManager.add(self.service)
+            peripheralManager.add(service)
+            isBluetoothEnabled = true
         } else {
             isBluetoothEnabled = false
         }
+    }
+    
+    func peripheralManager(
+        _ peripheral: CBPeripheralManager,
+        central: CBCentral,
+        didSubscribeTo characteristic: CBCharacteristic
+    ) {
+        pairedTo = central
+        peripheralManager.stopAdvertising()
+        isAdvertising = false
     }
 }
