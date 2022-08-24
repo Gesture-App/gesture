@@ -5,4 +5,7 @@
 //  Created by Anson Yu on 8/23/22.
 //
 
-import Foundation
+import CoreML
+import Vision
+
+let model = try? GestureModel(configuration: MLModelConfiguration())
