@@ -9,9 +9,10 @@ import (
 )
 
 type Vec3 struct {
-	X float32 `json:"x"`
-	Y float32 `json:"y"`
-	Z float32 `json:"z"`
+	X     float32 `json:"x"`
+	Y     float32 `json:"y"`
+	Z     float32 `json:"z"`
+	Shape string  `json:"shape"`
 }
 
 type InputJson struct {
@@ -28,6 +29,14 @@ func normalize(f float32, mult int) int {
 	}
 }
 
+func mapToMouseState(b bool) string {
+  if b {
+    return "down"
+  } else {
+    return "up"
+  }
+}
+
 func HandleInput(buf []byte) {
 	input := InputJson{}
 	json.Unmarshal(buf, &input)
@@ -35,9 +44,19 @@ func HandleInput(buf []byte) {
 	sx, sy := robotgo.GetScreenSize()
 	x, y := normalize(input.Left.X, sx), normalize(-input.Left.Y, sy)
 
-	fmt.Fprintf(Writer, "Left hand   x:%0.2f y:%0.2f z:%0.2f\nRight hand  x:%0.2f y:%0.2f z:%0.2f\nMouse pos   x:%00d y:%00d\n", input.Left.X, input.Left.Y, input.Left.Z, input.Right.X, input.Right.Y, input.Right.Z, x, y)
-	cursors.Cursor.AddPoint(cursors.Vec {
-    X: float64(x),
-    Y: float64(y),
+  left_click := input.Left.Shape == "closed"
+  right_click := input.Right.Shape == "closed"
+
+  fmt.Fprintf(Writer, "Left hand   x:%0.2f y:%0.2f z:%0.2f\nRight hand  x:%0.2f y:%0.2f z:%0.2f\nMouse pos   x:%00d y:%00d l_click: %t r_click: %t\n", input.Left.X, input.Left.Y, input.Left.Z, input.Right.X, input.Right.Y, input.Right.Z, x, y, left_click, right_click)
+
+  // handle events
+  // interp position
+	cursors.Cursor.AddPoint(cursors.Vec{
+		X: float64(x),
+		Y: float64(y),
 	})
+
+	// click
+	robotgo.Toggle("left", mapToMouseState(left_click))
+	robotgo.Toggle("right", mapToMouseState(right_click))
 }

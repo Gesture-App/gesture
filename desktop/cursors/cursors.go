@@ -1,7 +1,6 @@
 package cursors
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/go-vgo/robotgo"
@@ -122,17 +121,17 @@ func (c *InterpolatedCursor) AnimateNext(anim Edge) {
   t := float64(0)
 
   // hack to make timer tick instantly
-  f := func() {
+  f := func(t float64) {
     predicted := c.Spline.PredictPointFromSpline(t + float64(anim.Start))
     c.Cb(predicted)
   }
 
   for t <= 1 && len(c.Spline.Points) > 0 {
-    f()
+    f(t)
     select {
     case <-tick.C:
-      f()
-      t = float64(time.Now().Sub(start)) / float64(anim.Duration) 
+      t = float64(time.Now().Sub(start)) / float64(anim.Duration)
+      continue
     }
   }
   tick.Stop()

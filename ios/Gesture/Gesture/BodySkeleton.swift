@@ -8,12 +8,18 @@
 import Foundation
 import RealityKit
 import ARKit
-import CoreBluetooth
+
+enum HandShape: String, Codable {
+    case open
+    case closed
+    case unknown
+}
 
 struct HandJSON: Codable {
     let x: Float
     let y: Float
     let z: Float
+    let shape: HandShape
 }
 
 struct Payload: Codable {
@@ -25,14 +31,11 @@ class BodySkeleton: Entity {
     var joints: [String: Entity] = [:]
     var bones: [String: Entity] = [:]
     
-    private var bl: BluetoothManager?
-    private var timer = Timer()
-    private var l_hand: [Entity] = []
-    private var r_hand: [Entity] = []
+    var l_hand: [Entity] = []
+    var r_hand: [Entity] = []
     
-    required init(for bodyAnchor: ARBodyAnchor, bluetooth bl: BluetoothManager) {
+    required init(for bodyAnchor: ARBodyAnchor) {
         super.init()
-        self.bl = bl
         
         for jointName in ARSkeletonDefinition.defaultBody3D.jointNames {
             // Default values for joint appearance
@@ -81,11 +84,6 @@ class BodySkeleton: Entity {
             bones[bone.name] = boneEntity
             self.addChild(boneEntity)
         }
-        
-        // initialize auto-upload to bluetootht
-        self.timer = Timer.scheduledTimer(withTimeInterval: 1 / 10, repeats: true, block: { _ in
-            self.sendHandData()
-        })
     }
     
     required init() {
@@ -124,36 +122,6 @@ class BodySkeleton: Entity {
             
             entity.position = skeletonBone.centerPosition
             entity.look(at: skeletonBone.toJoint.position, from: skeletonBone.centerPosition, relativeTo: nil) // Sets orientation for bone
-        }
-    }
-    
-    private func sendHandData() {
-        if self.l_hand.count > 0 && self.r_hand.count > 0 {
-            let encode = {(entity: Entity) -> HandJSON in
-                let pos = entity.position
-                return HandJSON(x: pos.x, y: pos.y, z: pos.z)
-            }
-            
-            let calc_avg = {(hands: [HandJSON]) -> HandJSON in
-                let x_bar = hands.map({ $0.x }).reduce(0, +) / Float(hands.count)
-                let y_bar = hands.map({ $0.y }).reduce(0, +) / Float(hands.count)
-                let z_bar = hands.map({ $0.z }).reduce(0, +) / Float(hands.count)
-                return HandJSON(x: x_bar, y: y_bar, z: z_bar)
-            }
-            
-            let l = calc_avg(self.l_hand.map(encode))
-            let r = calc_avg(self.r_hand.map(encode))
-            
-            do {
-                let payload: Payload = Payload(left: l, right: r)
-                let jsonData = try JSONEncoder().encode(payload)
-                let data = Data.init(jsonData)
-                bl!.peripheralManager.updateValue(data, for: bl!.handsCharacteristic, onSubscribedCentrals: [bl!.pairedTo!])
-                
-                // reset l and r
-                self.l_hand = []
-                self.r_hand = []
-            } catch { {}() }
         }
     }
     
