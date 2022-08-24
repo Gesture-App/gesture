@@ -42,7 +42,7 @@ struct ARViewContainer: UIViewRepresentable  {
     // Extend ARView to implement body tracking functionality
     class Coordinator: NSObject, ARSessionDelegate {
         var frameCounter: Int = 0
-        let handPosePredictionInterval: Int = 30
+        let handPosePredictionInterval: Int = 12
         var parent: ARViewContainer
         
         init(_ parent: ARViewContainer) {
@@ -100,7 +100,9 @@ struct ARViewContainer: UIViewRepresentable  {
         
         // Implement ARSession didUpdate anchors delegate method
         public func session(_ session: ARSession, didUpdate frame: ARFrame) {
-            // This time we will get the camera frame from ARSession
+            // If you execute inference of the model every frame, the processing becomes heavy and it may block the rendering of AR, so inference is executed at intervals.
+            if frameCounter % handPosePredictionInterval == 0 {
+                // This time we will get the camera frame from ARSession
                 let pixelBuffer = frame.capturedImage
                 // Create a hand pose detection request
                 let handPoseRequest = VNDetectHumanHandPoseRequest()
@@ -122,13 +124,11 @@ struct ARViewContainer: UIViewRepresentable  {
 
                 // Obtained hand data
                 guard let observation = handPoses.first else { return }
-
-                // If you execute inference of the model every frame, the processing becomes heavy and it may block the rendering of AR, so inference is executed at intervals.
-                frameCounter += 1
-                if frameCounter % handPosePredictionInterval == 0 {
-                    makePrediction(handPoseObservation: observation)
-                    frameCounter = 0
-                }
+                
+                makePrediction(handPoseObservation: observation)
+                frameCounter = 0
+            }
+            frameCounter += 1
         }
     }
 }

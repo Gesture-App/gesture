@@ -7,15 +7,15 @@ type Spline struct {
 	TotalLength float64
 }
 
-func NewSpline() Spline {
-	return Spline{
+func NewSpline() *Spline {
+	return &Spline{
 		Points:  []Vec{},
 		Lengths: []float64{},
 		Prev:    nil,
 	}
 }
 
-func (s Spline) AddPoint(v Vec) {
+func (s *Spline) AddPoint(v Vec) {
   if s.Prev != nil {
     length := v.Dist(*s.Prev)
     s.Lengths = append(s.Lengths, length)
@@ -26,7 +26,7 @@ func (s Spline) AddPoint(v Vec) {
   s.Prev = &v
 }
 
-func (s Spline) Clear() {
+func (s *Spline) Clear() {
   if s.Prev != nil {
     s.Points = []Vec{*s.Prev}
   } else {
@@ -43,8 +43,8 @@ func min(a, b int) int {
 }
 
 // wizardry from https://github.com/steveruizok/perfect-cursors/blob/9758dedee9c562427d33b539cee51de3abfbb764/perfect-cursors/src/spline.ts#L33
-func (s Spline) PredictPointFromSpline(rt float64) Vec {
-  l := len(s.Points)
+func (s *Spline) PredictPointFromSpline(rt float64) Vec {
+  l := len(s.Points) - 1
   d := int(rt)
   p1 := min(d + 1, l)
   p2 := min(p1 + 1, l)

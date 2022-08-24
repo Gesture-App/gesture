@@ -1,12 +1,13 @@
 package cursors
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/go-vgo/robotgo"
 )
 
-var Cursor InterpolatedCursor
+var Cursor *InterpolatedCursor
 
 func init() {
   Cursor = NewInterpolatedCursor(func(point Vec) {
@@ -33,12 +34,12 @@ type InterpolatedCursor struct {
 	Timestamp     time.Time
 	Timeout       *time.Timer
 	PrevPoint     *Vec
-	Spline        Spline
+	Spline        *Spline
 	Cb            func(point Vec)
 }
 
-func NewInterpolatedCursor(cb func(point Vec)) InterpolatedCursor {
-  return InterpolatedCursor {
+func NewInterpolatedCursor(cb func(point Vec)) *InterpolatedCursor {
+  return &InterpolatedCursor {
     State: Stopped,
     Queue: []Edge{},
     Timestamp: time.Now(),
@@ -57,7 +58,7 @@ func clamp(t time.Duration) time.Duration {
   return t
 }
 
-func (c InterpolatedCursor) AddPoint(point Vec) {
+func (c *InterpolatedCursor) AddPoint(point Vec) {
   if c.Timeout != nil {
     c.Timeout.Stop()
     c.Timeout = nil
@@ -85,10 +86,10 @@ func (c InterpolatedCursor) AddPoint(point Vec) {
     c.Spline.AddPoint(point)
     c.State = Idle
   } else {
-    c.Spline.AddPoint(*c.PrevPoint)
+    c.Spline.AddPoint(point)
   }
 
-  if duration < 16 {
+  if duration < (time.Second / 30) {
     c.PrevPoint = &point
     c.Timestamp = time.Now()
     c.Cb(point)
@@ -115,14 +116,26 @@ func (c InterpolatedCursor) AddPoint(point Vec) {
   }
 }
 
-func (c InterpolatedCursor) AnimateNext(anim Edge) {
+func (c *InterpolatedCursor) AnimateNext(anim Edge) {
   start := time.Now()
+  tick := time.NewTicker(time.Second / 30)
+  t := float64(0)
 
-  for t := float64(time.Now().Sub(start)) / float64(anim.Duration); t <= 1 && len(c.Spline.Points) > 0; {
+  // hack to make timer tick instantly
+  f := func() {
     predicted := c.Spline.PredictPointFromSpline(t + float64(anim.Start))
     c.Cb(predicted)
-    return 
   }
+
+  for t <= 1 && len(c.Spline.Points) > 0 {
+    f()
+    select {
+    case <-tick.C:
+      f()
+      t = float64(time.Now().Sub(start)) / float64(anim.Duration) 
+    }
+  }
+  tick.Stop()
 
   if len(c.Queue) > 0 {
     next, new_q := c.Queue[0], c.Queue[1:]
@@ -139,7 +152,7 @@ func (c InterpolatedCursor) AnimateNext(anim Edge) {
   }
 }
 
-func (c InterpolatedCursor) Dispose() {
+func (c *InterpolatedCursor) Dispose() {
   c.Timeout.Stop()
   c.Timeout = nil
 }
