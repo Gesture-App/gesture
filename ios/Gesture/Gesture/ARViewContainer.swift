@@ -24,6 +24,7 @@ struct ARViewContainer: UIViewRepresentable  {
     
     func makeUIView(context: Context) -> ARView {
         let arView = ARView(frame: .zero, cameraMode: .ar, automaticallyConfigureSession: true)
+        let _ = print("is this working??!!!")
         
         // Add bodySkeletonAnchor to scene
         arView.scene.addAnchor(bodySkeletonAnchor)
@@ -40,6 +41,8 @@ struct ARViewContainer: UIViewRepresentable  {
     
     // Extend ARView to implement body tracking functionality
     class Coordinator: NSObject, ARSessionDelegate {
+        var frameCounter: Int = 0
+        let handPosePredictionInterval: Int = 30
         var parent: ARViewContainer
         
         init(_ parent: ARViewContainer) {
@@ -61,6 +64,71 @@ struct ARViewContainer: UIViewRepresentable  {
                     }
                 }
             }
+        }
+        
+        func displayClosedEffect() {
+            let _ = print ("closed")
+        }
+        
+        func displayOpenEffect() {
+            let _ = print ("open")
+        }
+        
+        func makePrediction(handPoseObservation: VNHumanHandPoseObservation) {
+            // Convert hand point detection results to a multidimensional array
+            guard let keypointsMultiArray = try? handPoseObservation.keypointsMultiArray() else { fatalError() }
+            do {
+                // Input to model and execute inference
+                let prediction = try model!.prediction(poses: keypointsMultiArray)
+                let label = prediction.label // The most reliable label
+                guard let confidence = prediction.labelProbabilities[label] else { return }
+                print("label:\(prediction.label)\nconfidence:\(confidence)")
+                
+                if confidence > 0.9 { // Run with a reliability of 90% or higher
+                    switch label {
+                    case "closed":displayClosedEffect()
+                    case "open":displayOpenEffect()
+                    default : break
+                    }
+                }
+            } catch {
+                print("Prediction error")
+            }
+        }
+        
+        
+        
+        // Implement ARSession didUpdate anchors delegate method
+        public func session(_ session: ARSession, didUpdate frame: ARFrame) {
+            // This time we will get the camera frame from ARSession
+                let pixelBuffer = frame.capturedImage
+                // Create a hand pose detection request
+                let handPoseRequest = VNDetectHumanHandPoseRequest()
+                // Number of hands to get
+                handPoseRequest.maximumHandCount = 1
+
+                // Execute a detection request on the camera frame
+                // The frame acquired from the camera is rotated 90 degrees, and if you infer it as it is, the pose may not be recognized correctly, so check the orientation.
+                let handler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer, orientation: .right, options: [:])
+                do {
+                    try handler.perform([handPoseRequest])
+                } catch {
+                    assertionFailure("HandPoseRequest failed: \(error)")
+                }
+
+                guard let handPoses = handPoseRequest.results, !handPoses.isEmpty else {
+                    return
+                }
+
+                // Obtained hand data
+                guard let observation = handPoses.first else { return }
+
+                // If you execute inference of the model every frame, the processing becomes heavy and it may block the rendering of AR, so inference is executed at intervals.
+                frameCounter += 1
+                if frameCounter % handPosePredictionInterval == 0 {
+                    makePrediction(handPoseObservation: observation)
+                    frameCounter = 0
+                }
         }
     }
 }
