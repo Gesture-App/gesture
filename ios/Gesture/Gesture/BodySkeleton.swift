@@ -30,7 +30,7 @@ class BodySkeleton: Entity {
     private var l_hand: [Entity] = []
     private var r_hand: [Entity] = []
     
-    required init(for bodyAnchor: ARBodyAnchor, bluetooth bl: BluetoothManager){
+    required init(for bodyAnchor: ARBodyAnchor, bluetooth bl: BluetoothManager) {
         super.init()
         self.bl = bl
         
@@ -83,7 +83,7 @@ class BodySkeleton: Entity {
         }
         
         // initialize auto-upload to bluetootht
-        self.timer = Timer.scheduledTimer(withTimeInterval: 1 / 15, repeats: true, block: { _ in
+        self.timer = Timer.scheduledTimer(withTimeInterval: 1 / 10, repeats: true, block: { _ in
             self.sendHandData()
         })
     }
@@ -128,27 +128,33 @@ class BodySkeleton: Entity {
     }
     
     private func sendHandData() {
-        let encode = {(entity: Entity) -> HandJSON in
-            let pos = entity.position
-            return HandJSON(x: pos.x, y: pos.y, z: pos.z)
+        if self.l_hand.count > 0 && self.r_hand.count > 0 {
+            let encode = {(entity: Entity) -> HandJSON in
+                let pos = entity.position
+                return HandJSON(x: pos.x, y: pos.y, z: pos.z)
+            }
+            
+            let calc_avg = {(hands: [HandJSON]) -> HandJSON in
+                let x_bar = hands.map({ $0.x }).reduce(0, +) / Float(hands.count)
+                let y_bar = hands.map({ $0.y }).reduce(0, +) / Float(hands.count)
+                let z_bar = hands.map({ $0.z }).reduce(0, +) / Float(hands.count)
+                return HandJSON(x: x_bar, y: y_bar, z: z_bar)
+            }
+            
+            let l = calc_avg(self.l_hand.map(encode))
+            let r = calc_avg(self.r_hand.map(encode))
+            
+            do {
+                let payload: Payload = Payload(left: l, right: r)
+                let jsonData = try JSONEncoder().encode(payload)
+                let data = Data.init(jsonData)
+                bl!.peripheralManager.updateValue(data, for: bl!.handsCharacteristic, onSubscribedCentrals: [bl!.pairedTo!])
+                
+                // reset l and r
+                self.l_hand = []
+                self.r_hand = []
+            } catch { {}() }
         }
-        
-        let calc_avg = {(hands: [HandJSON]) -> HandJSON in
-            let x_bar = hands.map({ $0.x }).reduce(0, +) / Float(hands.count)
-            let y_bar = hands.map({ $0.y }).reduce(0, +) / Float(hands.count)
-            let z_bar = hands.map({ $0.z }).reduce(0, +) / Float(hands.count)
-            return HandJSON(x: x_bar, y: y_bar, z: z_bar)
-        }
-        
-        let l = calc_avg(self.l_hand.map(encode))
-        let r = calc_avg(self.r_hand.map(encode))
-        
-        do {
-            let payload: Payload = Payload(left: l, right: r)
-            let jsonData = try JSONEncoder().encode(payload)
-            let data = Data.init(jsonData)
-            bl!.peripheralManager.updateValue(data, for: bl!.handsCharacteristic, onSubscribedCentrals: [bl!.pairedTo!])
-        } catch { print(error) }
     }
     
     private func createJoint(radius: Float, color: UIColor = .white) -> Entity {

@@ -41,10 +41,6 @@ class BluetoothManager: NSObject, ObservableObject, CBPeripheralManagerDelegate 
     func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {
         // ensure bluetooth is on
         if peripheral.state == .poweredOn {
-            if peripheralManager.isAdvertising {
-                peripheralManager.stopAdvertising()
-            }
-            
             let serviceCBUUID = CBUUID(string: serviceUUID)
             service = CBMutableService(type: serviceCBUUID, primary: true)
             handsCharacteristic = CBMutableCharacteristic.init(
