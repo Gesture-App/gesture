@@ -26,6 +26,9 @@ class BodySkeleton: Entity {
     var bones: [String: Entity] = [:]
     
     private var bl: BluetoothManager?
+    private var timer = Timer()
+    private var l_hand: [Entity] = []
+    private var r_hand: [Entity] = []
     
     required init(for bodyAnchor: ARBodyAnchor, bluetooth bl: BluetoothManager){
         super.init()
@@ -78,6 +81,11 @@ class BodySkeleton: Entity {
             bones[bone.name] = boneEntity
             self.addChild(boneEntity)
         }
+        
+        // initialize auto-upload to bluetootht
+        self.timer = Timer.scheduledTimer(withTimeInterval: 1 / 15, repeats: true, block: { _ in
+            self.sendHandData()
+        })
     }
     
     required init() {
@@ -104,7 +112,8 @@ class BodySkeleton: Entity {
             }
         }
         
-        sendHandData(l: l!, r: r!)
+        self.l_hand.append(l!)
+        self.r_hand.append(r!)
         
         for bone in Bones.allCases {
             let boneName = bone.name
@@ -118,14 +127,24 @@ class BodySkeleton: Entity {
         }
     }
     
-    private func sendHandData(l: Entity, r: Entity) {
+    private func sendHandData() {
         let encode = {(entity: Entity) -> HandJSON in
             let pos = entity.position
             return HandJSON(x: pos.x, y: pos.y, z: pos.z)
         }
         
+        let calc_avg = {(hands: [HandJSON]) -> HandJSON in
+            let x_bar = hands.map({ $0.x }).reduce(0, +) / Float(hands.count)
+            let y_bar = hands.map({ $0.y }).reduce(0, +) / Float(hands.count)
+            let z_bar = hands.map({ $0.z }).reduce(0, +) / Float(hands.count)
+            return HandJSON(x: x_bar, y: y_bar, z: z_bar)
+        }
+        
+        let l = calc_avg(self.l_hand.map(encode))
+        let r = calc_avg(self.r_hand.map(encode))
+        
         do {
-            let payload: Payload = Payload(left: encode(l), right: encode(r))
+            let payload: Payload = Payload(left: l, right: r)
             let jsonData = try JSONEncoder().encode(payload)
             let data = Data.init(jsonData)
             bl!.peripheralManager.updateValue(data, for: bl!.handsCharacteristic, onSubscribedCentrals: [bl!.pairedTo!])
