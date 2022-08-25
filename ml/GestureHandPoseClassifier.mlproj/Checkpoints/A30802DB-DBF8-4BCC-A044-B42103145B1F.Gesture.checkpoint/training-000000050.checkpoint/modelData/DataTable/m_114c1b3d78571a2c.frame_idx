@@ -1,0 +1,11 @@
+[sframe]
+version=0
+num_segments=0
+num_columns=2
+nrows=221
+[column_names]
+0000=keys
+0001=values
+[column_files]
+0000=m_114c1b3d78571a2c.sidx:0
+0001=m_114c1b3d78571a2c.sidx:1

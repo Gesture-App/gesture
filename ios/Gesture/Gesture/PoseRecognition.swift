@@ -8,4 +8,4 @@
 import CoreML
 import Vision
 
-let model = try? GestureModel(configuration: MLModelConfiguration())
+let model = try? Gesture_sm(configuration: MLModelConfiguration())

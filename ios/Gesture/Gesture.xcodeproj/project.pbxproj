@@ -19,6 +19,7 @@
 		D641C24228B3D069008FDA34 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D641C24128B3D069008FDA34 /* Preview Assets.xcassets */; };
 		D65B864028B41A7200E7A23D /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65B863F28B41A7100E7A23D /* BluetoothManager.swift */; };
 		D65B864428B46B6E00E7A23D /* ARViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65B864328B46B6E00E7A23D /* ARViewContainer.swift */; };
+		D67B869F28B8226B00F75738 /* Gesture sm.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = D67B869E28B8226B00F75738 /* Gesture sm.mlmodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		D641C24128B3D069008FDA34 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D65B863F28B41A7100E7A23D /* BluetoothManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
 		D65B864328B46B6E00E7A23D /* ARViewContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARViewContainer.swift; sourceTree = "<group>"; };
+		D67B869E28B8226B00F75738 /* Gesture sm.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = "Gesture sm.mlmodel"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +53,7 @@
 		0B7902AC28B579C200A3B480 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				D67B869E28B8226B00F75738 /* Gesture sm.mlmodel */,
 				0B7902AA28B5797700A3B480 /* GestureModel.mlmodel */,
 			);
 			path = Models;
@@ -169,6 +172,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D67B869F28B8226B00F75738 /* Gesture sm.mlmodel in Sources */,
 				D641C23D28B3D065008FDA34 /* ContentView.swift in Sources */,
 				0B7902A928B578CC00A3B480 /* PoseRecognition.swift in Sources */,
 				D65B864428B46B6E00E7A23D /* ARViewContainer.swift in Sources */,
