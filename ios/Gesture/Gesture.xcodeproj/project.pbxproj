@@ -13,6 +13,7 @@
 		0B2ED36228B404BB0017439C /* SkeletonJoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2ED36128B404BB0017439C /* SkeletonJoint.swift */; };
 		0B7902A928B578CC00A3B480 /* PoseRecognition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7902A828B578CC00A3B480 /* PoseRecognition.swift */; };
 		0B7902AB28B5797700A3B480 /* GestureModel.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 0B7902AA28B5797700A3B480 /* GestureModel.mlmodel */; };
+		0B7A19C028B7DE950096F007 /* QRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7A19BF28B7DE950096F007 /* QRCode.swift */; };
 		D641C23B28B3D065008FDA34 /* GestureApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641C23A28B3D065008FDA34 /* GestureApp.swift */; };
 		D641C23D28B3D065008FDA34 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D641C23C28B3D065008FDA34 /* ContentView.swift */; };
 		D641C23F28B3D069008FDA34 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D641C23E28B3D069008FDA34 /* Assets.xcassets */; };
@@ -28,6 +29,7 @@
 		0B2ED36128B404BB0017439C /* SkeletonJoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonJoint.swift; sourceTree = "<group>"; };
 		0B7902A828B578CC00A3B480 /* PoseRecognition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseRecognition.swift; sourceTree = "<group>"; };
 		0B7902AA28B5797700A3B480 /* GestureModel.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = GestureModel.mlmodel; sourceTree = "<group>"; };
+		0B7A19BF28B7DE950096F007 /* QRCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCode.swift; sourceTree = "<group>"; };
 		D641C23728B3D065008FDA34 /* Gesture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gesture.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D641C23A28B3D065008FDA34 /* GestureApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureApp.swift; sourceTree = "<group>"; };
 		D641C23C28B3D065008FDA34 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 		D641C23928B3D065008FDA34 /* Gesture */ = {
 			isa = PBXGroup;
 			children = (
+				0B7A19BF28B7DE950096F007 /* QRCode.swift */,
 				D65B864328B46B6E00E7A23D /* ARViewContainer.swift */,
 				0B7902A828B578CC00A3B480 /* PoseRecognition.swift */,
 				D65B863F28B41A7100E7A23D /* BluetoothManager.swift */,
@@ -174,6 +177,7 @@
 				D65B864428B46B6E00E7A23D /* ARViewContainer.swift in Sources */,
 				0B2ED35E28B4042A0017439C /* Bones.swift in Sources */,
 				D65B864028B41A7200E7A23D /* BluetoothManager.swift in Sources */,
+				0B7A19C028B7DE950096F007 /* QRCode.swift in Sources */,
 				0B2ED35C28B4040F0017439C /* BodySkeleton.swift in Sources */,
 				0B7902AB28B5797700A3B480 /* GestureModel.mlmodel in Sources */,
 				D641C23B28B3D065008FDA34 /* GestureApp.swift in Sources */,
