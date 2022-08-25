@@ -17,7 +17,10 @@ require (
 	github.com/lxn/win v0.0.0-20210218163916-a377121e959e // indirect
 	github.com/mattn/go-colorable v0.1.2 // indirect
 	github.com/mattn/go-isatty v0.0.8 // indirect
+	github.com/mattn/go-runewidth v0.0.9 // indirect
+	github.com/mdp/qrterminal/v3 v3.0.0 // indirect
 	github.com/muka/go-bluetooth v0.0.0-20210812063148-b6c83362e27d // indirect
+	github.com/nsf/termbox-go v1.1.1 // indirect
 	github.com/otiai10/gosseract v2.2.1+incompatible // indirect
 	github.com/robotn/gohook v0.31.3 // indirect
 	github.com/robotn/xgb v0.0.0-20190912153532-2cb92d044934 // indirect
@@ -31,7 +34,11 @@ require (
 	github.com/vcaesar/imgo v0.30.0 // indirect
 	github.com/vcaesar/keycode v0.10.0 // indirect
 	github.com/vcaesar/tt v0.20.0 // indirect
+	github.com/yeqown/go-qrcode/v2 v2.2.1 // indirect
+	github.com/yeqown/go-qrcode/writer/terminal v1.1.0 // indirect
+	github.com/yeqown/reedsolomon v1.0.0 // indirect
 	golang.org/x/image v0.0.0-20211028202545-6944b10bf410 // indirect
 	golang.org/x/sys v0.0.0-20211123173158-ef496fb156ab // indirect
+	rsc.io/qr v0.2.0 // indirect
 	tinygo.org/x/bluetooth v0.5.0 // indirect
 )

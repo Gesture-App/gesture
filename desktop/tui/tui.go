@@ -7,6 +7,7 @@ import (
 
 	"github.com/briandowns/spinner"
 	"github.com/ttacon/chalk"
+  "github.com/mdp/qrterminal/v3"
 )
 
 var s *spinner.Spinner
@@ -42,4 +43,16 @@ func DeviceFound(localname string) {
 	fmt.Println(chalk.Green.Color(str))
 	s.Suffix = " Attempting to connect..."
 	s.Start()
+}
+
+func PrintQRCode() {
+	fmt.Println(chalk.Bold.TextStyle("\n\nPlease scan the QR Code in the app to calibrate the world position\n\n"))
+  config := qrterminal.Config{
+    Level: qrterminal.L,
+    Writer: os.Stdout,
+    BlackChar: qrterminal.WHITE,
+    WhiteChar: qrterminal.BLACK,
+    QuietZone: 1,
+  }
+  qrterminal.GenerateWithConfig("gesture_anchor", config)
 }

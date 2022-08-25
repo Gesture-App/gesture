@@ -81,11 +81,14 @@ func connect(ctx *ReceiverCtx, res bluetooth.ScanResult) {
 	chars, err := svc.DiscoverCharacteristics(uuid_arr)
 	must("discover characteristics for service", err)
 
-	// Writer.Start()
+	Writer.Start()
 
 	ctx.datastream = &(chars[0])
 	err = ctx.datastream.EnableNotifications(HandleInput)
 	must("enable notifications on characteristic stream", err)
+	
+	tui.PrintQRCode()
+	
 	select {}
 }
 
@@ -94,3 +97,4 @@ func must(action string, err error) {
 		tui.Error("Failed to " + action + ": " + err.Error())
 	}
 }
+
