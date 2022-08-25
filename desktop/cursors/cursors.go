@@ -1,7 +1,6 @@
 package cursors
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/go-vgo/robotgo"
