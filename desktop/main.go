@@ -81,7 +81,7 @@ func connect(ctx *ReceiverCtx, res bluetooth.ScanResult) {
 	chars, err := svc.DiscoverCharacteristics(uuid_arr)
 	must("discover characteristics for service", err)
 
-	// Writer.Start()
+	Writer.Start()
 
 	ctx.datastream = &(chars[0])
 	err = ctx.datastream.EnableNotifications(HandleInput)
