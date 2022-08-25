@@ -58,5 +58,5 @@ func HandleInput(buf []byte) {
 
 	// click
 	robotgo.Toggle("left", mapToMouseState(left_click))
-	robotgo.Toggle("right", mapToMouseState(right_click))
+	// robotgo.Toggle("right", mapToMouseState(right_click))
 }
