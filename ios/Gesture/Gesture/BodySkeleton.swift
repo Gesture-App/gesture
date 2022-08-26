@@ -44,16 +44,14 @@ class BodySkeleton: Entity {
             var toRender = false
             
             switch jointName {
-            case "left_hand_joint", "right_hand_joint":
+            case "left_hand_joint":
                 jointRadius *= 1
-                toRender = true
-            case _ where jointName.hasPrefix("left_hand"):
-                jointRadius *= 0.5
-                jointColor = .red
-                toRender = true
-            case _ where jointName.hasPrefix("right_hand"):
-                jointRadius *= 0.5
                 jointColor = .blue
+                toRender = true
+                break
+            case "right_hand_joint":
+                jointRadius *= 1
+                jointColor = .red
                 toRender = true
             default:
                 break
@@ -62,6 +60,7 @@ class BodySkeleton: Entity {
             if toRender {
                 // Create an entity for the joint, add to joints directory, and add it to the parent entity (i.e. bodySkeleton)
                 let jointEntity = createJoint(radius: jointRadius, color: jointColor)
+                toRender = true
                 joints[jointName] = jointEntity
                 self.addChild(jointEntity)
             }

@@ -77,7 +77,10 @@ struct ARViewContainer: UIViewRepresentable  {
         
         private var timer = Timer()
         private var skeleton: BodySkeleton?
-        private var handShape = Queue<HandShape>(cap: 3)
+        private var lHandDistance = Queue<Double>(cap: 2)
+        private var rHandDistance = Queue<Double>(cap: 2)
+        private var lDown = false
+        private var rDown = false
         
         init(_ parent: ARViewContainer) {
             self.parent = parent
@@ -87,35 +90,51 @@ struct ARViewContainer: UIViewRepresentable  {
             })
         }
         
-        func mostFrequent(array: [HandShape]) -> HandShape {
-            var counts: [HandShape: Int] = [:]
-            array.forEach { counts[$0] = (counts[$0] ?? 0) + 1 }
-            if let max_val = counts.max(by: {$0.value < $1.value})?.value {
-                return counts.compactMap { $0.value == max_val ? $0.key : nil }.first!
+        private var threshold = 3
+        func detect_click(array: [Double], existing: Bool) -> Bool {
+            var v = existing
+            if array.count >= 3 {
+                for i in 0...array.count - 2 {
+                    if Int(array[i + 1] / array[i]) > threshold {
+                        print("detected mouse release", array[i], " -> ", array[i + 1])
+                        v = false
+                        break
+                    } else if Int(array[i] / array[i + 1]) > threshold {
+                        print("detected mouse click", array[i], " -> ", array[i + 1])
+                        v = true
+                        break
+                    }
+                }
             }
-            return .unknown
+            return v
         }
         
         private func sendHandData() {
             if let skeleton = parent.bodySkeleton {
                 if skeleton.l_hand.list.count > 0 && skeleton.r_hand.list.count > 0 {
-                    // get most common elt in handshapes
-                    let common_shape = mostFrequent(array: self.handShape.list)
-                    let _ = print(common_shape.rawValue)
-                    let encode = {(entity: Entity) -> HandJSON in
+                    // is left click
+                    self.lDown = detect_click(array: self.lHandDistance.list, existing: self.lDown)
+                    self.rDown = detect_click(array: self.rHandDistance.list, existing: self.rDown)
+                    
+                    let encode = {(isRight: Bool, entity: Entity) -> HandJSON in
                         let pos = entity.position
-                        return HandJSON(x: pos.x, y: pos.y, z: pos.z, shape: common_shape)
+                        let clicked = isRight ? self.rDown : self.lDown
+                        return HandJSON(x: pos.x, y: pos.y, z: pos.z, shape: clicked ? .closed : .open)
                     }
                     
                     let calc_avg = {(hands: [HandJSON]) -> HandJSON in
                         let x_bar = hands.map({ $0.x }).reduce(0, +) / Float(hands.count)
                         let y_bar = hands.map({ $0.y }).reduce(0, +) / Float(hands.count)
                         let z_bar = hands.map({ $0.z }).reduce(0, +) / Float(hands.count)
-                        return HandJSON(x: x_bar, y: y_bar, z: z_bar, shape: common_shape)
+                        return HandJSON(x: x_bar, y: y_bar, z: z_bar, shape: hands.first!.shape )
                     }
                     
-                    let l = calc_avg(skeleton.l_hand.list.map(encode))
-                    let r = calc_avg(skeleton.r_hand.list.map(encode))
+                    let l = calc_avg(skeleton.l_hand.list.map({(entity: Entity) -> HandJSON in
+                        return encode(false, entity)
+                    }))
+                    let r = calc_avg(skeleton.r_hand.list.map({(entity: Entity) -> HandJSON in
+                        return encode(true, entity)
+                    }))
                     
                     do {
                         let payload: Payload = Payload(left: l, right: r)
@@ -154,54 +173,31 @@ struct ARViewContainer: UIViewRepresentable  {
             do {
                 // Get points for all fingers
                 let thumbPoints = try observation.recognizedPoints(.thumb)
-                let wristPoints = try observation.recognizedPoints(.all)
-                let indexFingerPoints = try observation.recognizedPoints(.indexFinger)
-                let middleFingerPoints = try observation.recognizedPoints(.middleFinger)
-                let ringFingerPoints = try observation.recognizedPoints(.ringFinger)
-                let littleFingerPoints = try observation.recognizedPoints(.littleFinger)
+                let fingerPoints = try observation.recognizedPoints(.indexFinger)
                 
                 // Extract individual points from Point groups.
                 let thumbTipPoint = thumbPoints[.thumbTip]!
-                let indexTipPoint = indexFingerPoints[.indexTip]!
-                let middleTipPoint = middleFingerPoints[.middleTip]!
-                let ringTipPoint = ringFingerPoints[.ringTip]!
-                let littleTipPoint = littleFingerPoints[.littleTip]!
-                let wristPoint = wristPoints[.wrist]!
+                let fingerPoint = fingerPoints[.indexTip]!
                 
-                let distance = thumbTipPoint.distance(indexTipPoint)
-                let _ = print(distance)
-                if distance < 0.01 {
-                    self.handShape.enqueue(.closed)
+                let distance = thumbTipPoint.distance(fingerPoint)
+                if thumbTipPoint.confidence > 0.8 && fingerPoint.confidence > 0.8 {
+                    if observation.chirality == .left {
+                        self.lHandDistance.enqueue(distance)
+                    } else if observation.chirality == .right {
+                        self.rHandDistance.enqueue(distance)
+                    }
                 } else {
-                    self.handShape.enqueue(.open)
+                    if observation.chirality == .left {
+                        self.lHandDistance.enqueue(self.lHandDistance.list.last ?? 0.1)
+                    } else if observation.chirality == .right {
+                        self.rHandDistance.enqueue(self.rHandDistance.list.last ?? 0.1)
+                    }
                 }
             } catch {
-                self.handShape.enqueue(.unknown)
+                // do nothing
+                self.lHandDistance.enqueue(self.lHandDistance.list.last ?? 0.1)
+                self.rHandDistance.enqueue(self.rHandDistance.list.last ?? 0.1)
             }
-
-            
-//            guard let keypointsMultiArray = try? handPoseObservation.keypointsMultiArray() else { fatalError() }
-//            do {
-//                // Input to model and execute inference
-//                let prediction = try model!.prediction(poses: keypointsMultiArray)
-//                let label = prediction.label // The most reliable label
-//                guard let confidence = prediction.labelProbabilities[label] else { return }
-//                if confidence > 0.8 {
-//                    print("label: \(prediction.label) @ confidence:\(confidence)\n")
-//                    switch label {
-//                    case "closed":
-//                        self.handShape = .closed
-//                        break
-//                    case "open":
-//                        self.handShape = .open
-//                        break
-//                    default:
-//                        self.handShape = .unknown
-//                    }
-//                }
-//            } catch {
-//                print("Prediction error")
-//            }
         }
         
         // Implement ARSession didUpdate anchors delegate method
@@ -213,7 +209,7 @@ struct ARViewContainer: UIViewRepresentable  {
                 // Create a hand pose detection request
                 let handPoseRequest = VNDetectHumanHandPoseRequest()
                 // Number of hands to get
-                handPoseRequest.maximumHandCount = 1
+                handPoseRequest.maximumHandCount = 2
 
                 // Execute a detection request on the camera frame
                 // The frame acquired from the camera is rotated 90 degrees, and if you infer it as it is, the pose may not be recognized correctly, so check the orientation.
@@ -230,8 +226,8 @@ struct ARViewContainer: UIViewRepresentable  {
 
                 // Obtained hand data
                 guard let observation = handPoses.first else { return }
-                
                 makePrediction(observation: observation)
+
                 frameCounter = 0
             }
             frameCounter += 1
