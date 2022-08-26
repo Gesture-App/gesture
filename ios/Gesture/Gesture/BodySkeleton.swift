@@ -31,8 +31,8 @@ class BodySkeleton: Entity {
     var joints: [String: Entity] = [:]
     var bones: [String: Entity] = [:]
     
-    var l_hand: [Entity] = []
-    var r_hand: [Entity] = []
+    var l_hand = Queue<Entity>(cap: 10)
+    var r_hand = Queue<Entity>(cap: 10)
     
     required init(for bodyAnchor: ARBodyAnchor) {
         super.init()
@@ -92,8 +92,8 @@ class BodySkeleton: Entity {
             }
         }
         
-        self.l_hand.append(l!)
-        self.r_hand.append(r!)
+        self.l_hand.enqueue(l!)
+        self.r_hand.enqueue(r!)
         
         for bone in Bones.allCases {
             let boneName = bone.name

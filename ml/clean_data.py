@@ -5,6 +5,7 @@ from pathlib import Path
 
 Path("./data/open").mkdir(parents=True, exist_ok=True)
 Path("./data/closed").mkdir(parents=True, exist_ok=True)
+Path("./data/unknown").mkdir(parents=True, exist_ok=True)
 os.chdir("./video")
 for file in glob.glob("*.mov"):
     name, type = file.rstrip(".mov").split("_")

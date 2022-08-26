@@ -10,6 +10,32 @@ import RealityKit
 import ARKit
 import CoreBluetooth
 
+struct Queue<T> {
+    public var list = [T]()
+    var cap: Int
+    
+    init(cap: Int) {
+        self.cap = cap
+    }
+    
+    mutating func enqueue(_ element: T) {
+        if list.count > self.cap {
+            // dequeue and throw away res
+            let _ = self.dequeue()
+        }
+        
+        list.append(element)
+    }
+
+    mutating func dequeue() -> T? {
+         if !list.isEmpty {
+           return list.removeFirst()
+         } else {
+           return nil
+         }
+    }
+}
+
 // Wraps UIKit-based ARView to be used in SwiftUI View
 struct ARViewContainer: UIViewRepresentable  {
     var bluetooth = BluetoothManager()
@@ -51,7 +77,7 @@ struct ARViewContainer: UIViewRepresentable  {
         
         private var timer = Timer()
         private var skeleton: BodySkeleton?
-        private var handShape: HandShape = .unknown
+        private var handShape = Queue<HandShape>(cap: 3)
         
         init(_ parent: ARViewContainer) {
             self.parent = parent
@@ -61,23 +87,35 @@ struct ARViewContainer: UIViewRepresentable  {
             })
         }
         
+        func mostFrequent(array: [HandShape]) -> HandShape {
+            var counts: [HandShape: Int] = [:]
+            array.forEach { counts[$0] = (counts[$0] ?? 0) + 1 }
+            if let max_val = counts.max(by: {$0.value < $1.value})?.value {
+                return counts.compactMap { $0.value == max_val ? $0.key : nil }.first!
+            }
+            return .unknown
+        }
+        
         private func sendHandData() {
             if let skeleton = parent.bodySkeleton {
-                if skeleton.l_hand.count > 0 && skeleton.r_hand.count > 0 {
+                if skeleton.l_hand.list.count > 0 && skeleton.r_hand.list.count > 0 {
+                    // get most common elt in handshapes
+                    let common_shape = mostFrequent(array: self.handShape.list)
+                    let _ = print(common_shape.rawValue)
                     let encode = {(entity: Entity) -> HandJSON in
                         let pos = entity.position
-                        return HandJSON(x: pos.x, y: pos.y, z: pos.z, shape: self.handShape)
+                        return HandJSON(x: pos.x, y: pos.y, z: pos.z, shape: common_shape)
                     }
                     
                     let calc_avg = {(hands: [HandJSON]) -> HandJSON in
                         let x_bar = hands.map({ $0.x }).reduce(0, +) / Float(hands.count)
                         let y_bar = hands.map({ $0.y }).reduce(0, +) / Float(hands.count)
                         let z_bar = hands.map({ $0.z }).reduce(0, +) / Float(hands.count)
-                        return HandJSON(x: x_bar, y: y_bar, z: z_bar, shape: self.handShape)
+                        return HandJSON(x: x_bar, y: y_bar, z: z_bar, shape: common_shape)
                     }
                     
-                    let l = calc_avg(skeleton.l_hand.map(encode))
-                    let r = calc_avg(skeleton.r_hand.map(encode))
+                    let l = calc_avg(skeleton.l_hand.list.map(encode))
+                    let r = calc_avg(skeleton.r_hand.list.map(encode))
                     
                     do {
                         let payload: Payload = Payload(left: l, right: r)
@@ -90,10 +128,6 @@ struct ARViewContainer: UIViewRepresentable  {
                                 parent.bluetooth.pairedTo!
                             ]
                         )
-                        
-                        // reset l and r
-                        parent.bodySkeleton!.l_hand = []
-                        parent.bodySkeleton!.r_hand = []
                     } catch { {}() }
                 }
             }
@@ -116,30 +150,58 @@ struct ARViewContainer: UIViewRepresentable  {
             }
         }
 
-        func makePrediction(handPoseObservation: VNHumanHandPoseObservation) {
-            // Convert hand point detection results to a multidimensional array
-            guard let keypointsMultiArray = try? handPoseObservation.keypointsMultiArray() else { fatalError() }
+        func makePrediction(observation: VNHumanHandPoseObservation) {
             do {
-                // Input to model and execute inference
-                let prediction = try model!.prediction(poses: keypointsMultiArray)
-                let label = prediction.label // The most reliable label
-                guard let confidence = prediction.labelProbabilities[label] else { return }
-                if confidence > 0.8 {
-                    print("label: \(prediction.label) @ confidence:\(confidence)\n")
-                    switch label {
-                    case "closed":
-                        self.handShape = .closed
-                        break
-                    case "open":
-                        self.handShape = .open
-                        break
-                    default:
-                        self.handShape = .unknown
-                    }
+                // Get points for all fingers
+                let thumbPoints = try observation.recognizedPoints(.thumb)
+                let wristPoints = try observation.recognizedPoints(.all)
+                let indexFingerPoints = try observation.recognizedPoints(.indexFinger)
+                let middleFingerPoints = try observation.recognizedPoints(.middleFinger)
+                let ringFingerPoints = try observation.recognizedPoints(.ringFinger)
+                let littleFingerPoints = try observation.recognizedPoints(.littleFinger)
+                
+                // Extract individual points from Point groups.
+                let thumbTipPoint = thumbPoints[.thumbTip]!
+                let indexTipPoint = indexFingerPoints[.indexTip]!
+                let middleTipPoint = middleFingerPoints[.middleTip]!
+                let ringTipPoint = ringFingerPoints[.ringTip]!
+                let littleTipPoint = littleFingerPoints[.littleTip]!
+                let wristPoint = wristPoints[.wrist]!
+                
+                let distance = thumbTipPoint.distance(indexTipPoint)
+                let _ = print(distance)
+                if distance < 0.01 {
+                    self.handShape.enqueue(.closed)
+                } else {
+                    self.handShape.enqueue(.open)
                 }
             } catch {
-                print("Prediction error")
+                self.handShape.enqueue(.unknown)
             }
+
+            
+//            guard let keypointsMultiArray = try? handPoseObservation.keypointsMultiArray() else { fatalError() }
+//            do {
+//                // Input to model and execute inference
+//                let prediction = try model!.prediction(poses: keypointsMultiArray)
+//                let label = prediction.label // The most reliable label
+//                guard let confidence = prediction.labelProbabilities[label] else { return }
+//                if confidence > 0.8 {
+//                    print("label: \(prediction.label) @ confidence:\(confidence)\n")
+//                    switch label {
+//                    case "closed":
+//                        self.handShape = .closed
+//                        break
+//                    case "open":
+//                        self.handShape = .open
+//                        break
+//                    default:
+//                        self.handShape = .unknown
+//                    }
+//                }
+//            } catch {
+//                print("Prediction error")
+//            }
         }
         
         // Implement ARSession didUpdate anchors delegate method
@@ -169,7 +231,7 @@ struct ARViewContainer: UIViewRepresentable  {
                 // Obtained hand data
                 guard let observation = handPoses.first else { return }
                 
-                makePrediction(handPoseObservation: observation)
+                makePrediction(observation: observation)
                 frameCounter = 0
             }
             frameCounter += 1

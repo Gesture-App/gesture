@@ -42,7 +42,7 @@ func HandleInput(buf []byte) {
 	json.Unmarshal(buf, &input)
 
 	sx, sy := robotgo.GetScreenSize()
-	x, y := normalize(input.Left.X, sx), normalize(-input.Left.Y, sy)
+	x, y := normalize(-input.Left.X, sx), normalize(-input.Left.Y, sy)
 
   left_click := input.Left.Shape == "closed"
   right_click := input.Right.Shape == "closed"
