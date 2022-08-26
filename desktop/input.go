@@ -42,10 +42,10 @@ func HandleInput(buf []byte) {
 	json.Unmarshal(buf, &input)
 
 	sx, sy := robotgo.GetScreenSize()
-	x, y := normalize(-input.Left.X, sx), normalize(-input.Left.Y, sy)
+	x, y := normalize(-input.Right.X, sx), normalize(-input.Right.Y, sy)
 
-  left_click := input.Left.Shape == "closed"
-  right_click := input.Right.Shape == "closed"
+  right_click := input.Left.Shape == "closed"
+  left_click := input.Right.Shape == "closed"
 
   fmt.Fprintf(Writer, "Left hand   x:%0.2f y:%0.2f z:%0.2f\nRight hand  x:%0.2f y:%0.2f z:%0.2f\nMouse pos   x:%00d y:%00d l_click: %t r_click: %t\n", input.Left.X, input.Left.Y, input.Left.Z, input.Right.X, input.Right.Y, input.Right.Z, x, y, left_click, right_click)
 
@@ -58,5 +58,4 @@ func HandleInput(buf []byte) {
 
 	// click
 	robotgo.Toggle("left", mapToMouseState(left_click))
-	// robotgo.Toggle("right", mapToMouseState(right_click))
 }
