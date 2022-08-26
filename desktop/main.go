@@ -87,8 +87,6 @@ func connect(ctx *ReceiverCtx, res bluetooth.ScanResult) {
 	err = ctx.datastream.EnableNotifications(HandleInput)
 	must("enable notifications on characteristic stream", err)
 	
-	tui.PrintQRCode()
-	
 	select {}
 }
 

@@ -20,15 +20,6 @@ type InputJson struct {
 	Right Vec3 `json:"right"`
 }
 
-func normalize(f float32, mult int) int {
-	r := int(((f + 1) / 2) * float32(mult))
-	if r < 0 {
-		return 0
-	} else {
-		return r
-	}
-}
-
 func mapToMouseState(b bool) string {
   if b {
     return "down"
@@ -37,12 +28,22 @@ func mapToMouseState(b bool) string {
   }
 }
 
+func clamp(x, min, max int) int {
+  if x < min {
+    return min
+  } else if x > max {
+    return max
+  }
+  return x
+}
+
 func HandleInput(buf []byte) {
 	input := InputJson{}
 	json.Unmarshal(buf, &input)
 
 	sx, sy := robotgo.GetScreenSize()
-	x, y := normalize(-input.Right.X, sx), normalize(-input.Right.Y, sy)
+	x := int((1 - ((input.Right.X + 0.7) / 1.4)) * float32(sx * 2))
+  y := int((1 - (input.Right.Y / 1.2)) * float32(sy * 2))
 
   right_click := input.Left.Shape == "closed"
   left_click := input.Right.Shape == "closed"
@@ -52,8 +53,8 @@ func HandleInput(buf []byte) {
   // handle events
   // interp position
 	cursors.Cursor.AddPoint(cursors.Vec{
-		X: float64(x),
-		Y: float64(y),
+		X: float64(clamp(x, 0, sx)),
+		Y: float64(clamp(y, 0, sy)),
 	})
 
 	// click

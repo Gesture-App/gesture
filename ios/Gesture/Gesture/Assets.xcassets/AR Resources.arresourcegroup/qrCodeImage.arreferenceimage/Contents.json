@@ -1,0 +1,16 @@
+{
+  "images" : [
+    {
+      "filename" : "qrCodeImage.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "unit" : "inches",
+    "width" : 4
+  }
+}
