@@ -20,7 +20,7 @@ interface InputJSON {
   right: Vec3,
 }
 
-const useGestureWS = (socketURL: 'ws://localhost:8888') => {
+const useGestureWS = (socketURL = 'ws://localhost:8888') => {
   const { lastMessage, readyState } = useWebSocket(socketURL);
   const [state, setState] = useState<InputJSON>({
     left: DefaultVec3,
@@ -35,7 +35,7 @@ const useGestureWS = (socketURL: 'ws://localhost:8888') => {
     }
   }, [lastMessage])
 
-  return { pose: state, ready: readyState !== ReadyState.OPEN }
+  return { pose: state, ready: readyState === ReadyState.OPEN }
 }
 
 export default useGestureWS

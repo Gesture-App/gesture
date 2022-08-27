@@ -1,5 +1,5 @@
 import { useGestureWS } from 'gesture-react-sdk'
-import styles from '../styles/Home.module.css'
+import styles from './App.css'
 
 export default function Home() {
   const { pose, ready } = useGestureWS()
@@ -7,7 +7,7 @@ export default function Home() {
     <div className={styles.container}>
       <main className={styles.main}>
         <h1>Gesture - SDK Demo</h1>
-        <p>Ready: {ready}</p>
+        <p>Ready: {ready ? 'yes' : 'no'}</p>
         {ready && <><div>
           <h3>Left</h3>
           <p>x: {pose.left.x}, y: {pose.left.y}, z: {pose.left.z}, shape: {pose.left.shape}</p>
