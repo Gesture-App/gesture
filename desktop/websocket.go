@@ -35,6 +35,8 @@ func serve(w http.ResponseWriter, r *http.Request) {
 				err = conn.WriteJSON(*CurInput)
 				if err != nil {
 					fmt.Printf("message write err: %s", err.Error())
+					// reset
+					return
 				}
 			}
 		}
