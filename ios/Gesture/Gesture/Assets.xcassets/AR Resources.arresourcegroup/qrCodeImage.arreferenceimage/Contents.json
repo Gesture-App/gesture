@@ -10,7 +10,12 @@
     "version" : 1
   },
   "properties" : {
+<<<<<<< Updated upstream
     "unit" : "inches",
     "width" : 4
+=======
+    "unit" : "feet",
+    "width" : 3.280839895013123
+>>>>>>> Stashed changes
   }
 }

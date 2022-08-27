@@ -41,7 +41,7 @@ struct ARViewContainer: UIViewRepresentable  {
     var bluetooth = BluetoothManager()
     var bodySkeleton: BodySkeleton?
     let bodySkeletonAnchor = AnchorEntity()
-    let arView = ARView(frame: .zero, cameraMode: .ar, automaticallyConfigureSession: true)
+    var arView = ARView(frame: .zero, cameraMode: .ar, automaticallyConfigureSession: true)
     
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
@@ -73,6 +73,8 @@ struct ARViewContainer: UIViewRepresentable  {
         _ uiView: Self.UIViewType,
         coordinator: Self.Coordinator
     ) {
+        coordinator.timer.invalidate()
+        uiView.session.pause()
     }
     
     // Extend ARView to implement body tracking functionality
@@ -82,7 +84,7 @@ struct ARViewContainer: UIViewRepresentable  {
         
         var parent: ARViewContainer
         
-        private var timer = Timer()
+        var timer = Timer()
         private var skeleton: BodySkeleton?
         private var lHandDistance = Queue<Double>(cap: 2)
         private var rHandDistance = Queue<Double>(cap: 2)
@@ -103,11 +105,9 @@ struct ARViewContainer: UIViewRepresentable  {
             if array.count >= 3 {
                 for i in 0...array.count - 2 {
                     if Int(array[i + 1] / array[i]) > threshold {
-                        print("detected mouse release", array[i], " -> ", array[i + 1])
                         v = false
                         break
                     } else if Int(array[i] / array[i + 1]) > threshold {
-                        print("detected mouse click", array[i], " -> ", array[i + 1])
                         v = true
                         break
                     }
@@ -235,6 +235,10 @@ struct ARViewContainer: UIViewRepresentable  {
                 // Obtained hand data
                 guard let observation = handPoses.first else { return }
                 makePrediction(observation: observation)
+                
+                if handPoses.count > 1 {
+                    makePrediction(observation: handPoses[1])
+                }
 
                 frameCounter = 0
             }
@@ -242,4 +246,3 @@ struct ARViewContainer: UIViewRepresentable  {
         }
     }
 }
-

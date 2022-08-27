@@ -5,6 +5,7 @@
 //  Created by Anson Yu on 8/25/22.
 //
 
+<<<<<<< Updated upstream
 //import Foundation
 //
 //
@@ -19,3 +20,10 @@
 //    request.symbologies = [.QR]
 //    self.qrRequests = [request]
 //}
+=======
+import Foundation
+import RealityKit
+import ARKit
+import UIKit
+
+>>>>>>> Stashed changes

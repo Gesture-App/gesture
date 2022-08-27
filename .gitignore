@@ -2,3 +2,6 @@
 *.mov
 ml/data
 ml/test
+
+web/node_modules
+
