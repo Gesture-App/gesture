@@ -76,25 +76,26 @@ function Paddle({ pose, hand }: any) {
   useFrame((state) => {
     const isLeft = hand === -1
     const pose_hand = isLeft ? pose.left : pose.right
+    const x_offset = 0.35
     values.current[0] = lerp(
       values.current[0],
-      ((pose_hand.x - 0.3) * Math.PI) / 5,
+      ((pose_hand.x - x_offset) * Math.PI) / 5,
       0.2
     );
     values.current[1] = lerp(
       values.current[1],
-      (pose_hand.x - 0.3 + hand * 0.1) * 14,
-      0.7
+      (pose_hand.x - x_offset + hand * 0.1) * 14,
+      0.4
     )
     values.current[2] = lerp(
       values.current[2],
-      (-pose_hand.y - 0.2) * 5,
-      0.7
+      (-pose_hand.y * 10) + 4,
+      0.4
     )
     values.current[3] = lerp(
       values.current[3],
-      pose_hand.z * 3,
-      0.7
+      (pose_hand.z - 1) * 3,
+      0.4
     )
     api.position.set(
       values.current[1],
