@@ -105,11 +105,9 @@ struct ARViewContainer: UIViewRepresentable  {
             if array.count >= 3 {
                 for i in 0...array.count - 2 {
                     if Int(array[i + 1] / array[i]) > threshold {
-                        print("detected mouse release", array[i], " -> ", array[i + 1])
                         v = false
                         break
                     } else if Int(array[i] / array[i + 1]) > threshold {
-                        print("detected mouse click", array[i], " -> ", array[i + 1])
                         v = true
                         break
                     }
