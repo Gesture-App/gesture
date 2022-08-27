@@ -72,24 +72,34 @@ function Paddle({ pose }: any) {
     }),
     useRef<Mesh>(null)
   );
-  const values = useRef([0, 0]);
+  const values = useRef([0, 0, 0, 0]);
   useFrame((state) => {
     values.current[0] = lerp(
       values.current[0],
-      (pose.left.x * Math.PI) / 5,
+      ((pose.left.x - 0.3) * Math.PI) / 5,
       0.2
     );
     values.current[1] = lerp(
       values.current[1],
-      (pose.left.x * Math.PI) / 5,
-      0.2
-    );
-    api.position.set(
-      pose.left.x * 10,
-      (-pose.left.y - 0.5) * 5,
+      (pose.left.x - 0.3) * 14,
+      0.3
+    )
+    values.current[2] = lerp(
+      values.current[2],
+      (-pose.left.y - 0.2) * 5,
+      0.3
+    )
+    values.current[3] = lerp(
+      values.current[3],
       pose.left.z,
+      0.3
+    )
+    api.position.set(
+      values.current[1],
+      values.current[2],
+      values.current[3],
     );
-    api.rotation.set(0, 0, values.current[1]);
+    api.rotation.set(0, 0, values.current[0]);
     if (!model.current) return;
   });
 
@@ -175,7 +185,7 @@ function ContactGround() {
   const [ref] = usePlane(
     () => ({
       onCollide: () => reset(true),
-      position: [0, -10, 0],
+      position: [0, -15, 0],
       rotation: [-Math.PI / 2, 0, 0],
       type: "Static"
     }),
