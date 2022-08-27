@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
 
 	"github.com/ansonyuu/gesture/cursors"
@@ -32,28 +33,29 @@ var LShape = "unknown"
 var RShape = "unknown"
 
 func init() {
-  if *IsServerMode {
-    LCursor = cursors.NewInterpolatedCursor(func(point cursors.Vec) {
-      CurInput.Left = Vec3 {
-        X: float32(point.X),
-        Y: float32(point.Y),
-        Z: float32(point.Z),
-        Shape: LShape,
-      } 
+	flag.Parse()
+	if *IsServerMode {
+		LCursor = cursors.NewInterpolatedCursor(func(point cursors.Vec) {
+			CurInput.Left = Vec3{
+				X:     float32(point.X),
+				Y:     float32(point.Y),
+				Z:     float32(point.Z),
+				Shape: LShape,
+			}
 		})
-    RCursor = cursors.NewInterpolatedCursor(func(point cursors.Vec) {
-      CurInput.Right = Vec3 {
-        X: float32(point.X),
-        Y: float32(point.Y),
-        Z: float32(point.Z),
-        Shape: RShape,
-      } 
+		RCursor = cursors.NewInterpolatedCursor(func(point cursors.Vec) {
+			CurInput.Right = Vec3{
+				X:     float32(point.X),
+				Y:     float32(point.Y),
+				Z:     float32(point.Z),
+				Shape: RShape,
+			}
 		})
-  } else {
-    VCursor = cursors.NewInterpolatedCursor(func(point cursors.Vec) {
+	} else {
+		VCursor = cursors.NewInterpolatedCursor(func(point cursors.Vec) {
 			robotgo.Move(int(point.X), int(point.Y))
 		})
-  }
+	}
 }
 
 func mapToMouseState(b bool) string {
@@ -89,8 +91,8 @@ func HandleInput(buf []byte) {
 	input := InputJson{}
 	json.Unmarshal(buf, &input)
 
-  LShape = input.Left.Shape
-  RShape = input.Right.Shape
+	LShape = input.Left.Shape
+	RShape = input.Right.Shape
 	if *IsServerMode {
 
 		adjustedL := adjustVec3(input.Left)
@@ -99,15 +101,14 @@ func HandleInput(buf []byte) {
 		LCursor.AddPoint(cursors.Vec{
 			X: float64(adjustedL.X),
 			Y: float64(adjustedL.Y),
-      Z: float64(adjustedL.Z),
+			Z: float64(adjustedL.Z),
 		})
 
 		RCursor.AddPoint(cursors.Vec{
 			X: float64(adjustedR.X),
 			Y: float64(adjustedR.Y),
-      Z: float64(adjustedR.Z),
+			Z: float64(adjustedR.Z),
 		})
-
 
 	} else {
 		sx, sy := robotgo.GetScreenSize()
@@ -116,13 +117,13 @@ func HandleInput(buf []byte) {
 		x := clamp(int(adjustedInput.X*float32(sx)), 0, sx)
 		y := clamp(int(adjustedInput.Y*float32(sy)), 0, sy)
 
-    fmt.Fprintf(Writer, "Left hand   x:%0.2f y:%0.2f z:%0.2f\nRight hand  x:%0.2f y:%0.2f z:%0.2f\nMouse pos   x:%00d y:%00d Left Pose: %s   Right Pose: %s\n", input.Left.X, input.Left.Y, input.Left.Z, input.Right.X, input.Right.Y, input.Right.Z, x, y, LShape, RShape)
+		fmt.Fprintf(Writer, "Left hand   x:%0.2f y:%0.2f z:%0.2f\nRight hand  x:%0.2f y:%0.2f z:%0.2f\nMouse pos   x:%00d y:%00d Left Pose: %s   Right Pose: %s\n", input.Left.X, input.Left.Y, input.Left.Z, input.Right.X, input.Right.Y, input.Right.Z, x, y, LShape, RShape)
 
 		// interp position
 		VCursor.AddPoint(cursors.Vec{
 			X: float64(x),
 			Y: float64(y),
-      Z: float64(adjustedInput.Z),
+			Z: float64(adjustedInput.Z),
 		})
 
 		// click

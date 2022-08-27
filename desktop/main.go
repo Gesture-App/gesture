@@ -32,7 +32,6 @@ var TERM = make(chan os.Signal, 1)
 var isConnected = false
 
 func main() {
-  flag.Parse()
 	tui.Header()
 
 	gesture_service_uuid, _ := bluetooth.ParseUUID("f4f8cc56-30e7-4a68-9d38-da0b16a20e82")
@@ -94,12 +93,12 @@ func connect(ctx *ReceiverCtx, res bluetooth.ScanResult) {
 	err = ctx.datastream.EnableNotifications(HandleInput)
 	must("enable notifications on characteristic stream", err)
 
-  if *IsServerMode {
-    StartWSServer()
-  } else {
-    // block forever to process events
-    select {}
-  }
+	if *IsServerMode {
+		StartWSServer()
+	} else {
+		// block forever to process events
+		select {}
+	}
 }
 
 func must(action string, err error) {
@@ -107,4 +106,3 @@ func must(action string, err error) {
 		tui.Error("Failed to " + action + ": " + err.Error())
 	}
 }
-

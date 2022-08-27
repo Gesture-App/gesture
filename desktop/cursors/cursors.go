@@ -116,12 +116,12 @@ func (c *InterpolatedCursor) loop(start time.Time, anim Edge) {
 		c.Cb(predicted)
 
 		// requestAnimationFrame
-    select {
-    case <-c.tick.C:
-      go func() {
-        c.loop(start, anim)
-      }()
-    }
+		select {
+		case <-c.tick.C:
+			go func() {
+				c.loop(start, anim)
+			}()
+		}
 	}
 
 	if len(c.Queue) > 0 {
