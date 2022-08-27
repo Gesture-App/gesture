@@ -1,6 +1,6 @@
 {
   "name": "gesture-react-sdk",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "main": "./dist/index.js",
   "files": [
     "src",

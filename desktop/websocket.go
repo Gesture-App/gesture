@@ -3,8 +3,6 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"os"
-	"os/signal"
 	"time"
 
 	"github.com/gorilla/websocket"
@@ -14,8 +12,8 @@ var upgrader = websocket.Upgrader{}
 var ticker = time.NewTicker(time.Second / 60)
 
 func StartWSServer() {
-	interrupt := make(chan os.Signal, 1)
-	signal.Notify(interrupt, os.Interrupt)
+  // TODO: make this more secure
+  upgrader.CheckOrigin = func (r *http.Request) bool { return true }
   http.HandleFunc("/", serve)
   http.ListenAndServe("localhost:8888", nil)
 }
