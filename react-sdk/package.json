@@ -1,7 +1,7 @@
 {
   "name": "gesture-react-sdk",
   "version": "0.1.2",
-  "main": "dist/index.js",
+  "main": "./dist/index.js",
   "files": [
     "src",
     "dist"
@@ -20,23 +20,6 @@
       "@babel/preset-env",
       "@babel/preset-react"
     ]
-  },
-  "exports": {
-    ".": {
-      "node": {
-        "types": "./dist/index.d.ts",
-        "module": "./dist/index.module.js",
-        "require": "./dist/index.js",
-        "import": "./dist/index.mjs"
-      },
-      "browser": {
-        "types": "./dist/index.d.ts",
-        "import": "./dist/index.module.js",
-        "require": "./dist/index.js"
-      },
-      "default": "./dist/index.module.js"
-    },
-    "./package.json": "./package.json"
   },
   "dependencies": {
     "cross-env": "^7.0.3",
