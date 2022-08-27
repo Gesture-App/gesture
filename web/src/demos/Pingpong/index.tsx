@@ -14,7 +14,6 @@ import useGestureWS from "gesture-react-sdk";
 import earthImg from "./resources/cross.jpg";
 import pingSound from "./resources/ping.mp3";
 import Text from "./Text";
-import { MorphBlendMesh } from "three-stdlib";
 
 type State = {
   api: {
@@ -22,7 +21,6 @@ type State = {
     reset: (welcome: boolean) => void;
   };
   count: number;
-  welcome: boolean;
 };
 
 const ping = new Audio(pingSound);
@@ -34,11 +32,10 @@ const useStore = create<State>((set) => ({
       ping.play();
       if (velocity > 4) set((state) => ({ count: state.count + 1 }));
     },
-    reset: (welcome) =>
-      set((state) => ({ count: welcome ? state.count : 0, welcome }))
+    reset: () =>
+      set(() => ({ count: 0 }))
   },
   count: 0,
-  welcome: true
 }));
 
 type PingPongGLTF = GLTF & {
@@ -58,16 +55,13 @@ const extensions = (loader: GLTFLoader) => {
   loader.setDRACOLoader(dracoLoader);
 };
 
-function Paddle() {
-  const { pose, ready } = useGestureWS();
-
+function Paddle({ pose }: any) {
   const { nodes, materials } = useLoader<PingPongGLTF, "/pingpong.glb">(
     GLTFLoader,
     "/pingpong.glb",
     extensions as (loader: Loader) => void
   ) as PingPongGLTF;
   const { pong } = useStore((state) => state.api);
-  const welcome = useStore((state) => state.welcome);
   const count = useStore((state) => state.count);
   const model = useRef<Group>(null);
   const [ref, api] = useBox(
@@ -87,27 +81,16 @@ function Paddle() {
     );
     values.current[1] = lerp(
       values.current[1],
-      (pose.left.y * Math.PI) / 5,
+      (pose.left.x * Math.PI) / 5,
       0.2
     );
     api.position.set(
       pose.left.x * 10,
-      (-pose.left.y + 0.5) * 5,
-      pose.left.z * 5
+      (-pose.left.y - 0.5) * 5,
+      pose.left.z,
     );
     api.rotation.set(0, 0, values.current[1]);
     if (!model.current) return;
-    model.current.rotation.x = 0;
-    model.current.rotation.y = 0;
-    model.current.rotation.z = 0;
-
-    // values.current[0] = lerp(values.current[0], (state.mouse.x * Math.PI) / 5, 0.2)
-    // values.current[1] = lerp(values.current[1], (state.mouse.x * Math.PI) / 5, 0.2)
-    // api.position.set(pose.left.x, pose.left.y, 0)
-    // api.rotation.set(0, 0, values.current[1])
-    // if (!model.current) return
-    // model.current.rotation.x = lerp(model.current.rotation.x, welcome ? Math.PI / 2 : 0, 0.2)
-    // model.current.rotation.y = values.current[0]
   });
 
   return (
@@ -201,26 +184,14 @@ function ContactGround() {
   return <mesh ref={ref} />;
 }
 
-const style = (welcome: boolean) =>
-  ({
-    color: "white",
-    display: welcome ? "block" : "none",
-    fontSize: "1.2em",
-    left: 50,
-    position: "absolute",
-    top: 50
-  } as const);
-
 export default function () {
-  const welcome = useStore((state) => state.welcome);
-  const { reset } = useStore((state) => state.api);
+  const { pose } = useGestureWS();
 
   return (
     <>
       <Canvas
         shadows
         camera={{ fov: 50, position: [0, 5, 12] }}
-        onPointerMissed={() => welcome && reset(false)}
       >
         <color attach="background" args={["#171720"]} />
         <ambientLight intensity={0.5} />
@@ -254,13 +225,12 @@ export default function () {
             <meshPhongMaterial color="#172017" />
           </mesh>
           <ContactGround />
-          {!welcome && <Ball />}
+          {pose.left.shape === 'open' && <Ball />}
           <Suspense fallback={null}>
-            <Paddle />
+            <Paddle pose={pose} />
           </Suspense>
         </Physics>
       </Canvas>
-      <div style={style(welcome)}>* click anywhere to start</div>
     </>
   );
 }
