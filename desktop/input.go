@@ -40,13 +40,13 @@ func clamp(x, min, max int) int {
 }
 
 func adjustVec3(input Vec3) Vec3 {
-	sx, sy := robotgo.GetScreenSize()
-  x := (1 - ((input.X + 0.7) / 1.2)) * float32(sx)
-  y := (1 - (input.Y / 1.2)) * float32(sy)
+  x := 1 - ((input.X + 0.7) / 1.2)
+  y := 1 - (input.Y / 1.2)
+  z := input.Z * 4
   return Vec3 {
     X: x,
     Y: y,
-    Z: input.Z,
+    Z: z,
     Shape: input.Shape,
   }
 }
@@ -64,8 +64,8 @@ func HandleInput(buf []byte) {
     sx, sy := robotgo.GetScreenSize()
     adjustedInput := adjustVec3(input.Right)
 
-    x := clamp(int(adjustedInput.X), 0, sx)
-    y := clamp(int(adjustedInput.Y), 0, sy)
+    x := clamp(int(adjustedInput.X * float32(sx)), 0, sx)
+    y := clamp(int(adjustedInput.Y * float32(sy)), 0, sy)
     right_click := input.Left.Shape == "closed"
     left_click := input.Right.Shape == "closed"
 
