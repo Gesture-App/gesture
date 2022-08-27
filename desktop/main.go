@@ -1,9 +1,9 @@
 package main
 
 import (
+	"flag"
 	"os"
 	"os/signal"
-	"flag"
 
 	"time"
 
@@ -29,6 +29,7 @@ var DEFAULT_PARAMS = bluetooth.ConnectionParams{
 }
 
 var TERM = make(chan os.Signal, 1)
+var isConnected = false
 
 func main() {
   flag.Parse()
@@ -51,6 +52,7 @@ func main() {
 
 	adapter.SetConnectHandler(func(addr bluetooth.Addresser, connected bool) {
 		tui.ConnectionChange(connected)
+		isConnected = connected
 	})
 	scan(&ctx)
 }

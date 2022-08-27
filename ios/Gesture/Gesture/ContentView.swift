@@ -12,13 +12,13 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-            VStack (spacing: 20) {
+            VStack {
                 Text("👋 Gesture")
                     .font(.largeTitle)
                 
                 VStack {
                     if let _ = bluetoothManager.pairedTo {
-                        NavigationLink(destination: ARViewContainer(bluetooth: bluetoothManager).edgesIgnoringSafeArea(.all)) {
+                        NavigationLink(destination: ARViewContainer(bluetooth: bluetoothManager).ignoresSafeArea(.all)) {
                             Text("Start gesture recognition")
                         }.buttonStyle(.borderedProminent)
                     } else {
@@ -30,7 +30,7 @@ struct ContentView: View {
                             }
                         }.buttonStyle(.bordered).font(.headline)
                     }
-                }.padding()
+                }
 
                 
                 VStack {
@@ -48,10 +48,9 @@ struct ContentView: View {
                     } else {
                         Text("Not paired yet")
                     }
-                }
+                }.padding(.all)
             }
         }
-        .padding(.all)
     }
 }
 

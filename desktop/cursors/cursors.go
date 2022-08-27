@@ -2,17 +2,7 @@ package cursors
 
 import (
 	"time"
-
-	"github.com/go-vgo/robotgo"
 )
-
-var Cursor *InterpolatedCursor
-
-func init() {
-	Cursor = NewInterpolatedCursor(func(point Vec) {
-		robotgo.Move(int(point.X), int(point.Y))
-	})
-}
 
 const (
 	Stopped = iota

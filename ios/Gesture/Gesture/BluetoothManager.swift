@@ -13,7 +13,7 @@ class BluetoothManager: NSObject, ObservableObject, CBPeripheralManagerDelegate 
     
     @Published var isBluetoothEnabled = false
     @Published var isAdvertising = false
-    public var pairedTo: Optional<CBCentral> = nil
+    @Published public var pairedTo: Optional<CBCentral> = nil
     
     let serviceUUID = "f4f8cc56-30e7-4a68-9d38-da0b16a20e82"
     var service: CBMutableService!

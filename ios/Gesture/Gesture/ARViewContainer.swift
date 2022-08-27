@@ -41,7 +41,7 @@ struct ARViewContainer: UIViewRepresentable  {
     var bluetooth = BluetoothManager()
     var bodySkeleton: BodySkeleton?
     let bodySkeletonAnchor = AnchorEntity()
-    let arView = ARView(frame: .zero, cameraMode: .ar, automaticallyConfigureSession: true)
+    var arView = ARView(frame: .zero, cameraMode: .ar, automaticallyConfigureSession: true)
     
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
@@ -73,6 +73,8 @@ struct ARViewContainer: UIViewRepresentable  {
         _ uiView: Self.UIViewType,
         coordinator: Self.Coordinator
     ) {
+        coordinator.timer.invalidate()
+        uiView.session.pause()
     }
     
     // Extend ARView to implement body tracking functionality
@@ -82,7 +84,7 @@ struct ARViewContainer: UIViewRepresentable  {
         
         var parent: ARViewContainer
         
-        private var timer = Timer()
+        var timer = Timer()
         private var skeleton: BodySkeleton?
         private var lHandDistance = Queue<Double>(cap: 2)
         private var rHandDistance = Queue<Double>(cap: 2)

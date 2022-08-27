@@ -60,8 +60,10 @@ func (s *Spline) PredictPointFromSpline(rt float64) Vec {
 
   x := (s.Points[p0].X * q1 + s.Points[p1].X * q2 + s.Points[p2].X * q3 + s.Points[p3].X * q4) / 2
   y := (s.Points[p0].Y * q1 + s.Points[p1].Y * q2 + s.Points[p2].Y * q3 + s.Points[p3].Y * q4) / 2
+  z := (s.Points[p0].Z * q1 + s.Points[p1].Z * q2 + s.Points[p2].Z * q3 + s.Points[p3].Z * q4) / 2
   return Vec {
     X: x,
     Y: y,
+    Z: z,
   }
 }
