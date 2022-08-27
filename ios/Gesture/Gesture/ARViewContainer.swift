@@ -237,6 +237,10 @@ struct ARViewContainer: UIViewRepresentable  {
                 // Obtained hand data
                 guard let observation = handPoses.first else { return }
                 makePrediction(observation: observation)
+                
+                if handPoses.count > 1 {
+                    makePrediction(observation: handPoses[1])
+                }
 
                 frameCounter = 0
             }
