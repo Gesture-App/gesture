@@ -3,6 +3,7 @@ package main
 import (
 	"os"
 	"os/signal"
+	"flag"
 
 	"time"
 
@@ -13,6 +14,8 @@ import (
 
 var adapter = bluetooth.DefaultAdapter
 var Writer = uilive.New()
+
+var IsServerMode = flag.Bool("server", false, "whether to start Gesture in Websocket server mode (default is virtual mouse input)")
 
 type ReceiverCtx struct {
 	isScanning bool
@@ -25,7 +28,10 @@ var DEFAULT_PARAMS = bluetooth.ConnectionParams{
 	ConnectionTimeout: bluetooth.NewDuration(10 * time.Second),
 }
 
+var TERM = make(chan os.Signal, 1)
+
 func main() {
+  flag.Parse()
 	tui.Header()
 
 	gesture_service_uuid, _ := bluetooth.ParseUUID("f4f8cc56-30e7-4a68-9d38-da0b16a20e82")
@@ -34,10 +40,9 @@ func main() {
 		uuid:       gesture_service_uuid,
 	}
 
-	c := make(chan os.Signal, 1)
-	signal.Notify(c, os.Interrupt)
+	signal.Notify(TERM, os.Interrupt)
 	go func() {
-		<-c
+		<-TERM
 		if ctx.device != nil {
 			ctx.device.Disconnect()
 		}
@@ -86,8 +91,13 @@ func connect(ctx *ReceiverCtx, res bluetooth.ScanResult) {
 	ctx.datastream = &(chars[0])
 	err = ctx.datastream.EnableNotifications(HandleInput)
 	must("enable notifications on characteristic stream", err)
-	
-	select {}
+
+  if *IsServerMode {
+    StartWSServer()
+  } else {
+    // block forever to process events
+    select {}
+  }
 }
 
 func must(action string, err error) {

@@ -20,6 +20,8 @@ type InputJson struct {
 	Right Vec3 `json:"right"`
 }
 
+var CurInput *InputJson
+
 func mapToMouseState(b bool) string {
   if b {
     return "down"
@@ -37,26 +39,45 @@ func clamp(x, min, max int) int {
   return x
 }
 
+func adjustVec3(input Vec3) Vec3 {
+	sx, sy := robotgo.GetScreenSize()
+  x := (1 - ((input.X + 0.7) / 1.2)) * float32(sx)
+  y := (1 - (input.Y / 1.2)) * float32(sy)
+  return Vec3 {
+    X: x,
+    Y: y,
+    Z: input.Z,
+    Shape: input.Shape,
+  }
+}
+
 func HandleInput(buf []byte) {
 	input := InputJson{}
 	json.Unmarshal(buf, &input)
+  
+  if *IsServerMode {
+    CurInput = &InputJson{
+      Left: adjustVec3(input.Left),
+      Right: adjustVec3(input.Right),
+    }
+  } else {
+    sx, sy := robotgo.GetScreenSize()
+    adjustedInput := adjustVec3(input.Right)
 
-	sx, sy := robotgo.GetScreenSize()
-	x := int((1 - ((input.Right.X + 0.7) / 1.4)) * float32(sx * 2))
-  y := int((1 - (input.Right.Y / 1.2)) * float32(sy * 2))
+    x := clamp(int(adjustedInput.X), 0, sx)
+    y := clamp(int(adjustedInput.Y), 0, sy)
+    right_click := input.Left.Shape == "closed"
+    left_click := input.Right.Shape == "closed"
 
-  right_click := input.Left.Shape == "closed"
-  left_click := input.Right.Shape == "closed"
+    fmt.Fprintf(Writer, "Left hand   x:%0.2f y:%0.2f z:%0.2f\nRight hand  x:%0.2f y:%0.2f z:%0.2f\nMouse pos   x:%00d y:%00d l_click: %t r_click: %t\n", input.Left.X, input.Left.Y, input.Left.Z, input.Right.X, input.Right.Y, input.Right.Z, x, y, left_click, right_click)
+    // handle events
+    // interp position
+    cursors.Cursor.AddPoint(cursors.Vec{
+      X: float64(x),
+      Y: float64(y),
+    })
 
-  fmt.Fprintf(Writer, "Left hand   x:%0.2f y:%0.2f z:%0.2f\nRight hand  x:%0.2f y:%0.2f z:%0.2f\nMouse pos   x:%00d y:%00d l_click: %t r_click: %t\n", input.Left.X, input.Left.Y, input.Left.Z, input.Right.X, input.Right.Y, input.Right.Z, x, y, left_click, right_click)
-
-  // handle events
-  // interp position
-	cursors.Cursor.AddPoint(cursors.Vec{
-		X: float64(clamp(x, 0, sx)),
-		Y: float64(clamp(y, 0, sy)),
-	})
-
-	// click
-	robotgo.Toggle("left", mapToMouseState(left_click))
+    // click
+    robotgo.Toggle("left", mapToMouseState(left_click))
+  }
 }

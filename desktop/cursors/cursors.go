@@ -65,7 +65,6 @@ func clamp(t time.Duration) time.Duration {
 func (c *InterpolatedCursor) AddPoint(point Vec) {
 	if c.Timeout != nil {
 		c.Timeout.Stop()
-		c.Timeout = nil
 	}
 
 	now := time.Now()
@@ -158,5 +157,4 @@ func (c *InterpolatedCursor) AnimateNext(anim Edge) {
 func (c *InterpolatedCursor) Dispose() {
 	c.Timeout.Stop()
 	c.tick.Stop()
-	c.Timeout = nil
 }

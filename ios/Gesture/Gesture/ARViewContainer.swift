@@ -41,20 +41,27 @@ struct ARViewContainer: UIViewRepresentable  {
     var bluetooth = BluetoothManager()
     var bodySkeleton: BodySkeleton?
     let bodySkeletonAnchor = AnchorEntity()
+    let arView = ARView(frame: .zero, cameraMode: .ar, automaticallyConfigureSession: true)
     
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
     
     func makeUIView(context: Context) -> ARView {
-        let arView = ARView(frame: .zero, cameraMode: .ar, automaticallyConfigureSession: true)
+        guard let referenceImages = ARReferenceImage.referenceImages(inGroupNamed: "AR Resources", bundle: nil) else {
+            fatalError("Missing expected asset catalog resources.")
+        }
+        
+        arView.scene.addAnchor(bodySkeletonAnchor)
         
         // Add bodySkeletonAnchor to scene
         arView.scene.addAnchor(bodySkeletonAnchor)
         
         let configuration = ARBodyTrackingConfiguration()
-        arView.session.run(configuration)
+        configuration.detectionImages = referenceImages
+        arView.session.run(configuration, options: [.resetTracking])
         arView.session.delegate = context.coordinator
+        arView.debugOptions = [.showAnchorOrigins, .showAnchorGeometry]
         return arView
     }
     
@@ -161,6 +168,7 @@ struct ARViewContainer: UIViewRepresentable  {
                     if let skeleton = parent.bodySkeleton {
                         // BodySkeleton already exists, update pose of all joints
                         skeleton.update(with: bodyAnchor)
+                        session.setWorldOrigin(relativeTransform: bodyAnchor.transform)
                     } else {
                         parent.bodySkeleton = BodySkeleton(for: bodyAnchor)
                         parent.bodySkeletonAnchor.addChild(parent.bodySkeleton!)

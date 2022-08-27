@@ -12,6 +12,7 @@ require (
 	github.com/go-ole/go-ole v1.2.6 // indirect
 	github.com/go-vgo/robotgo v0.100.10 // indirect
 	github.com/godbus/dbus/v5 v5.0.3 // indirect
+	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/gosuri/uilive v0.0.4 // indirect
 	github.com/konsorten/go-windows-terminal-sequences v1.0.3 // indirect
 	github.com/lxn/win v0.0.0-20210218163916-a377121e959e // indirect
