@@ -55,7 +55,7 @@ const extensions = (loader: GLTFLoader) => {
   loader.setDRACOLoader(dracoLoader);
 };
 
-function Paddle({ pose }: any) {
+function Paddle({ pose, hand }: any) {
   const { nodes, materials } = useLoader<PingPongGLTF, "/pingpong.glb">(
     GLTFLoader,
     "/pingpong.glb",
@@ -74,25 +74,27 @@ function Paddle({ pose }: any) {
   );
   const values = useRef([0, 0, 0, 0]);
   useFrame((state) => {
+    const isLeft = hand === -1
+    const pose_hand = isLeft ? pose.left : pose.right
     values.current[0] = lerp(
       values.current[0],
-      ((pose.left.x - 0.3) * Math.PI) / 5,
+      ((pose_hand.x - 0.3) * Math.PI) / 5,
       0.2
     );
     values.current[1] = lerp(
       values.current[1],
-      (pose.left.x - 0.3) * 14,
-      0.3
+      (pose_hand.x - 0.3 + hand * 0.1) * 14,
+      0.7
     )
     values.current[2] = lerp(
       values.current[2],
-      (-pose.left.y - 0.2) * 5,
-      0.3
+      (-pose_hand.y - 0.2) * 5,
+      0.7
     )
     values.current[3] = lerp(
       values.current[3],
-      pose.left.z,
-      0.3
+      pose_hand.z * 3,
+      0.7
     )
     api.position.set(
       values.current[1],
@@ -237,7 +239,8 @@ export default function () {
           <ContactGround />
           {pose.left.shape === 'open' && <Ball />}
           <Suspense fallback={null}>
-            <Paddle pose={pose} />
+            <Paddle pose={pose} hand={-1} />
+            <Paddle pose={pose} hand={1} />
           </Suspense>
         </Physics>
       </Canvas>
