@@ -33,7 +33,7 @@ var RShape = "unknown"
 
 func init() {
   if *IsServerMode {
-    VCursor = cursors.NewInterpolatedCursor(func(point cursors.Vec) {
+    LCursor = cursors.NewInterpolatedCursor(func(point cursors.Vec) {
       CurInput.Left = Vec3 {
         X: float32(point.X),
         Y: float32(point.Y),
