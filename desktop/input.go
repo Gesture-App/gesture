@@ -34,6 +34,22 @@ var RShape = "unknown"
 
 func init() {
 	flag.Parse()
+
+  CurInput = &InputJson{
+    Left: Vec3 {
+      X: 0,
+      Y: 0,
+      Z: 0,
+      Shape: LShape,
+    },
+    Right: Vec3 {
+      X: 0,
+      Y: 0,
+      Z: 0,
+      Shape: RShape,
+    },
+  }
+
 	if *IsServerMode {
 		LCursor = cursors.NewInterpolatedCursor(func(point cursors.Vec) {
 			CurInput.Left = Vec3{
