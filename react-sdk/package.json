@@ -1,17 +1,13 @@
 {
   "name": "gesture-react-sdk",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "dist/index.js",
   "files": [
     "src",
     "dist"
   ],
-  "module": "dist/index.module.js",
-  "esmodule": "dist/index.modern.js",
-  "umd:main": "dist/index.umd.js",
   "scripts": {
-    "compile": "cross-env node_modules/.bin/tsc -p .",
-    "push": "npm run compile && npm publish"
+    "compile": "cross-env node_modules/.bin/tsc -p ."
   },
   "devDependencies": {
     "@types/node": "^18.7.13",
