@@ -48,17 +48,10 @@ struct ARViewContainer: UIViewRepresentable  {
     }
     
     func makeUIView(context: Context) -> ARView {
-        guard let referenceImages = ARReferenceImage.referenceImages(inGroupNamed: "AR Resources", bundle: nil) else {
-            fatalError("Missing expected asset catalog resources.")
-        }
-        
-        arView.scene.addAnchor(bodySkeletonAnchor)
-        
         // Add bodySkeletonAnchor to scene
         arView.scene.addAnchor(bodySkeletonAnchor)
         
         let configuration = ARBodyTrackingConfiguration()
-        configuration.detectionImages = referenceImages
         arView.session.run(configuration, options: [.resetTracking])
         arView.session.delegate = context.coordinator
         arView.debugOptions = [.showAnchorOrigins, .showAnchorGeometry]

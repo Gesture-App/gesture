@@ -4,13 +4,14 @@
 Installation:
 `npm i gesture-react-sdk`
 
+You can choose to only use one of the two hands. Shape is either "open", "closed", or "unknown" (low confidence)
 
 ```jsx
-export default function Home() {
+export default function Example() {
   const { pose, ready } = useGestureWS()
   return (
-    <div className={styles.container}>
-      <main className={styles.main}>
+    <div>
+      <main>
         <h1>Gesture - SDK Demo</h1>
         <p>Ready: {ready}</p>
         {ready && <><div>
