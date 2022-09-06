@@ -18,36 +18,37 @@ Currently, Gesture exposes the hand pose information in one of two ways
 
 ![Demo of using both your hands (and depth information!) to control two table tennis paddles](./assets/hooks_demo.gif)*Demo of using both your hands (and depth information!) to control two table tennis paddles*
 
+This project was made by [Anson Yu](https://www.ansonyu.me/) and [Jacky Zhao](https://jzhao.xyz/) at [Hack Lodge S22](https://hacklodge.org/).
+
 ## Setup
 As of now, using Gesture requires installing the TestFlight for the iPhone controller which is still in beta. If you are interested, please message @_jzhao on Twitter if you'd like to get access and test.
 
 1. Install the iOS Controller from Test Flight
 2. Clone this repository
-3. Compile the Desktop Receiver
-  1. Install `go`
-  2. (OSX only) Enable Bluetooth for the terminal of your choice in System Preferences > Security & Privacy > Privacy > Bluetooth
-  3. `cd gesture/desktop`
-  4. `go install .`
-4. Using the `gesture-react-sdk`: please see the documentation on [npm](https://www.npmjs.com/package/gesture-react-sdk)
+3. Install `go`
+4. (OSX only) Enable Bluetooth for the terminal of your choice in System Preferences > Security & Privacy > Privacy > Bluetooth
+5. `cd gesture/desktop`
+6. `go install .`
+7. Using the `gesture-react-sdk`: please see the documentation on [npm](https://www.npmjs.com/package/gesture-react-sdk)
 
 ### Input Mode Usage
 0. Ensure Bluetooth is enabled and on for both your phone and computer
 1. Start the Gesture receiver in virtual input mode (controls the mouse), run `gesture`
 2. Open the iOS Controller
-  1. Press 'Start pairing to device'
-  2. Once you get the message 'Paired Successfully', press 'Start gesture recognition'
-3. Point the phone camera at yourself or someone else. Their *right* hand will be used to control the mouse cursor.
-4. To regain control over the mouse, exit the iOS Controller App, refocus the terminal and press `Ctrl + C` to end the program
+3. Press 'Start pairing to device'
+4. Once you get the message 'Paired Successfully', press 'Start gesture recognition'
+5. Point the phone camera at yourself or someone else. Their *right* hand will be used to control the mouse cursor.
+6. To regain control over the mouse, exit the iOS Controller App, refocus the terminal and press `Ctrl + C` to end the program
 
 ### Websocket Mode Usage
 0. Ensure Bluetooth is enabled and on for both your phone and computer
 1. Start the Gesture receiver in Websocket server mode (streams data to applications), run `gesture --server`
 2. Open the iOS Controller
-  1. Press 'Start pairing to device'
-  2. Once you get the message 'Paired Successfully', press 'Start gesture recognition'
-3. Point the phone camera at yourself or someone else
-4. Open your web app that is using `gesture-react-sdk` (or refresh the page if you already have it open)
-5. Connection should be established and data should start streaming!
+3. Press 'Start pairing to device'
+4. Once you get the message 'Paired Successfully', press 'Start gesture recognition'
+5. Point the phone camera at yourself or someone else
+6. Open your web app that is using `gesture-react-sdk` (or refresh the page if you already have it open)
+7. Connection should be established and data should start streaming!
 
 ## Architecture
 ![Gesture Architecture](./assets/gesture-setup.png)
