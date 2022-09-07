@@ -1,0 +1,2 @@
+# suppress resources from counting towards language stats on github
+web/public/* linguist-vendored
