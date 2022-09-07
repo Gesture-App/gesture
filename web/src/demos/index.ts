@@ -1,28 +1,9 @@
 import { lazy } from "react";
 
-const fileDemos = [
-  "Chain",
-  "CompoundBody",
-  "Constraints",
-  "ConvexPolyhedron",
-  "CubeHeap",
-  "Friction",
-  "Heightfield",
-  "HingeMotor",
-  "KinematicCube",
-  "Paused",
-  "SphereDebug",
-  "Triggers",
-  "Trimesh"
-] as const;
+const fileDemos = [] as const;
 
-const folderDemos = [
-  "MondayMorning",
-  "Multihand",
-  "Pingpong",
-  "Raycast",
-  "RaycastVehicle"
-] as const;
+
+const folderDemos = [ "Pingpong" ] as const;
 
 export const demoList = [...folderDemos, ...fileDemos] as const;
 

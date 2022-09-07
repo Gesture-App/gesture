@@ -28,7 +28,7 @@ const Page = styled(PageStyle)`
   }
 `;
 
-const defaultName = "MondayMorning";
+const defaultName = "Pingpong";
 const visibleComponents = demos;
 const DefaultComponent = visibleComponents[defaultName].Component;
 
